@@ -1,22 +1,194 @@
 <!DOCTYPE html>
 <html lang="en">
-<form action="https://formspree.io/f/mgororvr" method="POST">
-    
-    <label>Name:</label><br>
-    <input type="text" name="name" required><br><br>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Property Questionnaire by SS Keeler Co LLC.">
+    <title>SS Keeler Co, LLC Property Questionnaire</title>
 
-    <label>Email:</label><br>
-    <input type="email" name="email" required><br><br>
+    <!-- FAVICON -->
+    <link rel="icon" href="/favicon.ico?v=2">
+    <link rel="shortcut icon" href="/favicon.ico">
 
-    <label>Property Address:</label><br>
-    <input type="text" name="property_address"><br><br>
+    <!-- GOOGLE FONT -->
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
 
-    <label>Why are you selling?</label><br>
-    <textarea name="reason"></textarea><br><br>
+    <style>
+        body {
+            font-family: 'Libre Baskerville', serif;
+            background-color: #000000;
+            margin: 0;
+        }
 
-    <button type="submit">Submit</button>
+        header {
+            background: #2f5d50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
 
-</form>
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        h1 { margin-bottom: 10px; }
+
+        .container h2 {
+         margin-top: 30px;
+        border-bottom: 2px solid #eee;
+        padding-bottom: 5px;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .large-textarea {
+            min-height: 180px;
+        }
+
+        button {
+            margin-top: 25px;
+            padding: 12px 20px;
+            border: none;
+            background-color: #007BFF;
+            color: white;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: #222;
+            color: white;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- ✅ HEADER (NOW CORRECTLY PLACED) -->
+<header>
+    <h1>SS Keeler Co, LLC</h1>
+    <h2 style="font-weight: normal;">Jefferson, IA 50129</h2>
+    <h3 style="font-weight: normal;">
+        contact@sskeelercollc.com / (515) 531-2521
+    </h3>
+</header>
+
+<!-- ✅ MAIN CONTENT -->
+<div class="container">
+    <h1>Seller Property Questionnaire</h1>
+    <p>Please provide as much detail as possible.</p>
+
+    <form action="https://formspree.io/f/mgororvr" method="POST" enctype="multipart/form-data">
+
+        <h2>Lease Information</h2>
+
+        <label>All active leases and any amendments:</label>
+        <textarea name="leases" class="large-textarea"></textarea>
+
+        <label>Clarification on lease structures (CAM, NNN, etc.):</label>
+        <textarea name="lease_structure"></textarea>
+
+        <label>Vacancy history and current occupancy:</label>
+        <textarea name="vacancy"></textarea>
+
+        <h2>Financial Information</h2>
+
+        <label>Detailed operating expenses (taxes, insurance, maintenance, etc.):</label>
+        <textarea name="expenses" class="large-textarea"></textarea>
+
+        <label>Existing financing details and whether they are assumable:</label>
+        <textarea name="financing"></textarea>
+
+        <h2>Property Condition</h2>
+
+        <label>Property condition details (roof, HVAC, major systems):</label>
+        <textarea name="condition" class="large-textarea"></textarea>
+
+        <label>Deferred maintenance or near-term capital expenditures:</label>
+        <textarea name="deferred_maintenance"></textarea>
+
+        <h2>Legal & Zoning</h2>
+
+        <label>Zoning designation and permitted uses:</label>
+        <textarea name="zoning"></textarea>
+
+        <label>Title status, including liens or encumbrances:</label>
+        <textarea name="title_status"></textarea>
+
+        <h2>Additional Information</h2>
+
+        <label>Offering memorandum (if available):</label>
+        <textarea name="offering_memorandum"></textarea>
+
+        <h2>Document Upload</h2>
+
+        <label>Upload supporting documents:</label>
+        <input type="file" name="documents" multiple>
+
+        <input type="hidden" name="_subject" value="New Seller Submission">
+        <input type="hidden" name="_captcha" value="false">
+
+        <label>Upload supporting documents:</label>
+        <input type="file" name="documents" multiple>
+
+        <input type="hidden" name="_subject" value="New Seller Submission">
+        <input type="hidden" name="_captcha" value="false">
+        <label>Upload supporting documents:</label>
+        <input type="file" name="documents" multiple>
+
+        <input type="hidden" name="_subject" value="New Seller Submission">
+        <input type="hidden" name="_captcha" value="false">
+
+        <label>Upload supporting documents:</label>
+        <input type="file" name="documents" multiple>
+
+        <input type="hidden" name="_subject" value="New Seller Submission">
+        <input type="hidden" name="_captcha" value="false">
+        <label>Upload supporting documents:</label>
+        <input type="file" name="documents" multiple>
+
+        <input type="hidden" name="_subject" value="New Seller Submission">
+        <input type="hidden" name="_captcha" value="false">
+        
+        <button type="submit">Submit</button>
+
+    </form>
+</div>
+
+<!-- ✅ FOOTER (NOW INSIDE BODY) -->
+<footer>
+    <p>© 2026 SS Keeler Co, LLC</p>
+</footer>
 
 </body>
 </html>
