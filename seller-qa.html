@@ -25,6 +25,7 @@
             color: white;
             padding: 20px;
             text-align: center;
+            position: relative;
         }
 
         .container {
@@ -39,9 +40,9 @@
         h1 { margin-bottom: 10px; }
 
         .container h2 {
-         margin-top: 30px;
-        border-bottom: 2px solid #eee;
-        padding-bottom: 5px;
+            margin-top: 30px;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 5px;
         }
 
         label {
@@ -50,7 +51,7 @@
             font-weight: bold;
         }
 
-        input, textarea {
+        input, textarea, select {
             width: 100%;
             padding: 10px;
             margin-top: 5px;
@@ -76,6 +77,7 @@
             font-size: 16px;
             border-radius: 5px;
             cursor: pointer;
+            width: auto;
         }
 
         button:hover {
@@ -89,16 +91,61 @@
             color: white;
             margin-top: 40px;
         }
+
+        /* ✅ MOBILE OPTIMIZATION */
+        @media (max-width: 768px) {
+
+            body {
+                padding: 10px;
+            }
+
+            header img {
+                position: static !important;
+                display: block;
+                margin: 0 auto 10px auto;
+                width: 120px !important;
+            }
+
+            .container {
+                padding: 20px;
+                margin: 10px;
+                border-radius: 8px;
+            }
+
+            h1 {
+                font-size: 22px;
+            }
+
+            h2 {
+                font-size: 18px;
+            }
+
+            h3 {
+                font-size: 14px;
+            }
+
+            label {
+                font-size: 14px;
+            }
+
+            input, textarea, select {
+                font-size: 16px;
+            }
+
+            button {
+                width: 100%;
+                font-size: 16px;
+            }
+        }
     </style>
 </head>
 
 <body>
 
-<!-- ✅ HEADER (NOW CORRECTLY PLACED) -->
 <header>
     <img src="S. S. Keeler Co. - Black.png" alt="SS Keeler Co Logo" 
-       style="position:absolute; left:20px; width:160px; height:auto;">
-    
+         style="position:absolute; left:20px; width:160px; height:auto;">
+
     <h1>SS Keeler Co, LLC</h1>
     <h2 style="font-weight: normal;">Jefferson, IA 50129</h2>
     <h3 style="font-weight: normal;">
@@ -106,7 +153,6 @@
     </h3>
 </header>
 
-<!-- ✅ MAIN CONTENT -->
 <div class="container">
     <h1>Property Questionnaire</h1>
     <p>Please provide as much detail as possible.</p>
@@ -126,7 +172,7 @@
 
         <label>ZIP Code:</label>
         <input type="text" name="zip">
-        
+
         <h2>Contact Information</h2>
 
         <label>Full Name:</label>
@@ -143,7 +189,7 @@
 
         <label>Best way to contact you:</label>
         <input type="text" name="preferred_contact">
-        
+
         <h2>Lease Information</h2>
 
         <label>All active leases and any amendments:</label>
@@ -157,31 +203,31 @@
 
         <h2>Financial Information</h2>
 
-        <label>Detailed operating expenses (taxes, insurance, maintenance, etc.):</label>
+        <label>Detailed operating expenses:</label>
         <textarea name="expenses" class="large-textarea"></textarea>
 
-        <label>Existing financing details and whether they are assumable:</label>
+        <label>Existing financing details:</label>
         <textarea name="financing"></textarea>
 
         <h2>Property Condition</h2>
 
-        <label>Property condition details (roof, HVAC, major systems):</label>
+        <label>Property condition details:</label>
         <textarea name="condition" class="large-textarea"></textarea>
 
-        <label>Deferred maintenance or near-term capital expenditures:</label>
+        <label>Deferred maintenance:</label>
         <textarea name="deferred_maintenance"></textarea>
 
         <h2>Legal & Zoning</h2>
 
-        <label>Zoning designation and permitted uses:</label>
+        <label>Zoning designation:</label>
         <textarea name="zoning"></textarea>
 
-        <label>Title status, including liens or encumbrances:</label>
+        <label>Title status:</label>
         <textarea name="title_status"></textarea>
 
         <h2>Additional Information</h2>
 
-        <label>Offering memorandum (if available):</label>
+        <label>Offering memorandum:</label>
         <textarea name="offering_memorandum"></textarea>
 
         <button type="submit">Submit</button>
@@ -189,7 +235,6 @@
     </form>
 </div>
 
-<!-- ✅ FOOTER (NOW INSIDE BODY) -->
 <footer>
     <p>© 2026 SS Keeler Co, LLC</p>
 </footer>
