@@ -31,11 +31,16 @@
             text-align: center;
         }
 
-        header img {
+        header img.left-logo {
             position: absolute;
             left: 20px;
             width: 160px;
-            height: auto;
+        }
+
+        header img.right-image {
+            position: absolute;
+            right: 20px;
+            width: 100px;
         }
 
         .container {
@@ -87,7 +92,6 @@
             font-size: 16px;
             border-radius: 5px;
             cursor: pointer;
-            width: auto;
         }
 
         button:hover {
@@ -113,9 +117,11 @@
                 flex-direction: column;
             }
 
-            header img {
+            header img.left-logo,
+            header img.right-image {
                 position: static;
-                margin-bottom: 10px;
+                margin: 10px auto;
+                display: block;
                 width: 120px;
             }
 
@@ -144,12 +150,11 @@
 
 <body>
 
-<!-- ✅ UPDATED HEADER -->
 <header>
 
-    <!-- CLICKABLE LOGO -->
+    <!-- LEFT LOGO (CLICKABLE) -->
     <a href="index.html">
-        <img src="S. S. Keeler Co. - Black.png" alt="SS Keeler Co Logo">
+        <img src="S. S. Keeler Co. - Black.png" alt="SS Keeler Co Logo" class="left-logo">
     </a>
 
     <!-- CENTER TEXT -->
@@ -160,6 +165,11 @@
             contact@sskeelercollc.com / (515) 531-2521
         </h3>
     </div>
+
+    <!-- RIGHT TOWER IMAGE -->
+    <img src="JeffersonIA_MahanayTower.jpg" 
+         alt="Mahanay Tower" 
+         class="right-image">
 
 </header>
 
