@@ -15,7 +15,6 @@
 
     <!-- STYLES -->
    <style>
-  /* Global styles */
   body {
     margin: 0;
     font-family: 'Libre Baskerville', serif;
@@ -37,7 +36,21 @@
     margin-bottom: 60px;
   }
 
-  /* MOBILE RESPONSIVE FIXES */
+  /* BUTTON STYLE (matches your site) */
+  .primary-button {
+    display: inline-block;
+    padding: 12px 20px;
+    background-color: #2f5d50;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+
+  .primary-button:hover {
+    background-color: #24473d;
+  }
+
   @media (max-width: 768px) {
 
     header {
@@ -46,7 +59,6 @@
       padding: 20px !important;
     }
 
-    /* LEFT LOGO */
     header img:first-of-type {
       position: static !important;
       width: 140px !important;
@@ -54,7 +66,6 @@
       transform: none !important;
     }
 
-    /* RIGHT IMAGE (TOWER) */
     header img:last-of-type {
       position: static !important;
       width: 120px !important;
@@ -65,17 +76,9 @@
       padding: 20px !important;
     }
 
-    h1 {
-      font-size: 20px;
-    }
-
-    h2 {
-      font-size: 16px;
-    }
-
-    h3 {
-      font-size: 12px;
-    }
+    h1 { font-size: 20px; }
+    h2 { font-size: 16px; }
+    h3 { font-size: 12px; }
 
     form input,
     form textarea {
@@ -84,15 +87,14 @@
   }
 </style>
 </head>
-<body style="font-family: 'Libre Baskerville', serif; margin: 0;">
 
-  <header style="background:#2f5d50; color:white; padding:20px; display:flex; align-items:center; justify-content:center; position:relative;">
+<body>
 
-  <!-- LOGO (left side) -->
+<header style="background:#2f5d50; color:white; padding:20px; display:flex; align-items:center; justify-content:center; position:relative;">
+
   <img src="S. S. Keeler Co. - Black.png" alt="SS Keeler Co Logo" 
        style="position:absolute; left:20px; width:160px; height:auto;">
 
-  <!-- CENTER TEXT -->
   <div style="text-align:center;">
     <h1 style="margin:0;">SS Keeler Co, LLC</h1>
     <h2 style="font-weight: normal; margin:5px 0;">Jefferson, IA 50129</h2>
@@ -101,32 +103,42 @@
     </h3>
   </div>
 
-      <!-- LOGO (right side) -->
- <img src="JeffersonIA_MahanayTower.jpg" alt="Mahanay Tower" title="By Magicpiano - Own work, CC BY-SA 4.0, https://commons.wikimedia.org/w/index.php?curid=62802829" 
+  <img src="JeffersonIA_MahanayTower.jpg" alt="Mahanay Tower"
        style="position:absolute; right:20px; width:100px; height:auto;">
 
 </header>
-  <main style="max-width:800px; margin:auto; padding:20px;">
 
-    <section style="margin-bottom:20px;">
-      <h2>What We Do</h2>
-      <p>
-        SS Keeler Co LLC specializes in small town urban planning and 
-        town square revitalization, helping communities transform underutilized 
-        downtown spaces into vibrant, functional, and economically sustainable hubs.
-      </p>
-    </section>
+<main>
 
-    <section style="margin-bottom:20px;">
-      <h2>Why It Matters</h2>
-      <p>
-        Strong town centers create stronger communities. We help small towns preserve 
-        their identity while building spaces that attract business, encourage connection,
-        and support long-term growth.
-      </p>
-    </section>
+<section>
+  <h2>What We Do</h2>
+  <p>
+    SS Keeler Co LLC specializes in small town urban planning and 
+    town square revitalization, helping communities transform underutilized 
+    downtown spaces into vibrant, functional, and economically sustainable hubs.
+  </p>
+</section>
 
-    <section style="background:#f4f4f4; padding:20px; border-radius:8px; margin-top:20px;">
+<section>
+  <h2>Why It Matters</h2>
+  <p>
+    Strong town centers create stronger communities. We help small towns preserve 
+    their identity while building spaces that attract business, encourage connection,
+    and support long-term growth.
+  </p>
+</section>
+
+<!-- ✅ NEW SELLER BUTTON SECTION -->
+<section style="text-align:center; margin-top:30px;">
+  <h3>Have a Property to Discuss?</h3>
+  <p>Submit detailed property information through our seller questionnaire.</p>
+
+  <a href="seller-qa.html" class="primary-button">
+    Seller Property Questionnaire
+  </a>
+</section>
+
+<section style="background:#f4f4f4; padding:20px; border-radius:8px; margin-top:20px;">
   <h3>Start the Conversation</h3>
   <p>Tell us about your community and your goals.</p>
 
@@ -150,16 +162,13 @@
     </button>
 
   </form>
-  <nav>
-    <a href="seller-qa.html">Seller Q&A</a>
-  </nav>
-  </section>
+</section>
 
-  </main>
+</main>
 
-  <footer style="text-align:center; padding:20px; background:#222; color:white;">
-    <p>© 2026 SS Keeler Co, LLC</p>
-  </footer>
+<footer style="text-align:center; padding:20px; background:#222; color:white;">
+  <p>© 2026 SS Keeler Co, LLC</p>
+</footer>
 
 </body>
 </html>
