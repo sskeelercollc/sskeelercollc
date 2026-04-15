@@ -24,8 +24,18 @@
             background: #2f5d50;
             color: white;
             padding: 20px;
-            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             position: relative;
+            text-align: center;
+        }
+
+        header img {
+            position: absolute;
+            left: 20px;
+            width: 160px;
+            height: auto;
         }
 
         .container {
@@ -81,7 +91,7 @@
         }
 
         button:hover {
-            background-color: #0056b3;
+            background-color: #24473d;
         }
 
         footer {
@@ -92,18 +102,21 @@
             margin-top: 40px;
         }
 
-        /* ✅ MOBILE OPTIMIZATION */
+        /* MOBILE */
         @media (max-width: 768px) {
 
             body {
                 padding: 10px;
             }
 
+            header {
+                flex-direction: column;
+            }
+
             header img {
-                position: static !important;
-                display: block;
-                margin: 0 auto 10px auto;
-                width: 120px !important;
+                position: static;
+                margin-bottom: 10px;
+                width: 120px;
             }
 
             .container {
@@ -112,21 +125,11 @@
                 border-radius: 8px;
             }
 
-            h1 {
-                font-size: 22px;
-            }
+            h1 { font-size: 22px; }
+            h2 { font-size: 18px; }
+            h3 { font-size: 14px; }
 
-            h2 {
-                font-size: 18px;
-            }
-
-            h3 {
-                font-size: 14px;
-            }
-
-            label {
-                font-size: 14px;
-            }
+            label { font-size: 14px; }
 
             input, textarea, select {
                 font-size: 16px;
@@ -134,7 +137,6 @@
 
             button {
                 width: 100%;
-                font-size: 16px;
             }
         }
     </style>
@@ -142,15 +144,23 @@
 
 <body>
 
+<!-- ✅ UPDATED HEADER -->
 <header>
-    <img src="S. S. Keeler Co. - Black.png" alt="SS Keeler Co Logo" 
-         style="position:absolute; left:20px; width:160px; height:auto;">
 
-    <h1>SS Keeler Co, LLC</h1>
-    <h2 style="font-weight: normal;">Jefferson, IA 50129</h2>
-    <h3 style="font-weight: normal;">
-        contact@sskeelercollc.com / (515) 531-2521
-    </h3>
+    <!-- CLICKABLE LOGO -->
+    <a href="index.html">
+        <img src="S. S. Keeler Co. - Black.png" alt="SS Keeler Co Logo">
+    </a>
+
+    <!-- CENTER TEXT -->
+    <div>
+        <h1 style="margin:0;">SS Keeler Co, LLC</h1>
+        <h2 style="font-weight: normal; margin:5px 0;">Jefferson, IA 50129</h2>
+        <h3 style="font-weight: normal; margin:5px 0;">
+            contact@sskeelercollc.com / (515) 531-2521
+        </h3>
+    </div>
+
 </header>
 
 <div class="container">
