@@ -15,41 +15,22 @@
 
     <style>
         body {
-    margin: 0;
-    font-family: 'Libre Baskerville', serif;
-    line-height: 1.6;
-  }
+            margin: 0;
+            font-family: 'Libre Baskerville', serif;
+            line-height: 1.6;
+            background-color: #000;
+        }
 
-  img {
-    max-width: 100%;
-    height: auto;
-  }
-
-  main {
-    max-width: 800px;
-    margin: auto;
-    padding: 40px;
-  }
-
-  section {
-    margin-bottom: 60px;
-  }
-
-  /* BUTTON STYLE (matches your site) */
-  .primary-button {
-    display: inline-block;
-    padding: 12px 20px;
-    background-color: #2f5d50;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    font-size: 16px;
-  }
-
-  .primary-button:hover {
-    background-color: #24473d;
-  }
-
+        header {
+            background:#2f5d50;
+            color:white;
+            padding:20px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            position:relative;
+            text-align:center;
+        }
 
         .container {
             max-width: 900px;
@@ -59,8 +40,6 @@
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
-
-        h1 { margin-bottom: 10px; }
 
         .container h2 {
             margin-top: 30px;
@@ -74,7 +53,7 @@
             font-weight: bold;
         }
 
-        input, textarea, select {
+        input, textarea {
             width: 100%;
             padding: 10px;
             margin-top: 5px;
@@ -111,23 +90,18 @@
             padding: 20px;
             background: #222;
             color: white;
-            margin-top: 40px;
         }
 
         /* MOBILE */
         @media (max-width: 768px) {
 
-            body {
-                padding: 10px;
-            }
-
             header {
                 flex-direction: column;
             }
 
-            header img.left-logo,
-            header img.right-image {
-                position: static;
+            header img {
+                position: static !important;
+                transform: none !important;
                 margin: 10px auto;
                 display: block;
                 width: 120px;
@@ -136,17 +110,6 @@
             .container {
                 padding: 20px;
                 margin: 10px;
-                border-radius: 8px;
-            }
-
-            h1 { font-size: 22px; }
-            h2 { font-size: 18px; }
-            h3 { font-size: 14px; }
-
-            label { font-size: 14px; }
-
-            input, textarea, select {
-                font-size: 16px;
             }
 
             button {
@@ -158,35 +121,32 @@
 
 <body>
 
-<header style="background:#2f5d50; color:white; padding:20px; display:flex; align-items:center; justify-content:center; position:relative;">
+<header>
 
-<!-- LEFT LOGO (CLICKABLE) -->
+    <!-- LEFT LOGO (CLICKABLE) -->
     <a href="index.html">
         <img src="S. S. Keeler Co. - Black.png" 
-       alt="SS Keeler Co Logo" 
-       style="position:absolute; left:20px; width:160px; height:auto;">
+             alt="SS Keeler Co Logo"
+             style="position:absolute; left:20px; top:50%; transform:translateY(-50%); width:160px;">
     </a>
 
     <!-- CENTER TEXT -->
-    <div style="text-align:center;">
-    <h1 style="margin:0;">SS Keeler Co, LLC</h1>
-    <h2 style="font-weight: normal; margin:5px 0;">Jefferson, IA 50129</h2>
-    <h3 style="font-weight: normal; margin:5px 0;">
-      contact@sskeelercollc.com / ( 5 1 5 ) 5 3 1-2 5 2 1
-    </h3>
-  </div>
+    <div>
+        <h1 style="margin:0;">SS Keeler Co, LLC</h1>
+        <h2 style="font-weight: normal; margin:5px 0;">Jefferson, IA 50129</h2>
+        <h3 style="font-weight: normal; margin:5px 0;">
+            contact@sskeelercollc.com / (515) 531-2521
+        </h3>
+    </div>
 
     <!-- RIGHT TOWER IMAGE -->
-     <p><a href="https://cityofjeffersoniowa.org/">
-    <img src="JeffersonIA_MahanayTower.jpg" 
-         alt="Mahanay Tower" 
-         class="right-image"
-         style="position:absolute; right:20px; width:160px; height:auto;"></a>
-    </p>
+    <a href="https://cityofjeffersoniowa.org/">
+        <img src="JeffersonIA_MahanayTower.jpg" 
+             alt="Mahanay Tower"
+             style="position:absolute; right:20px; top:50%; transform:translateY(-50%); width:100px;">
+    </a>
 
 </header>
-
-
 
 <div class="container">
     <h1>Property Questionnaire</h1>
@@ -197,7 +157,7 @@
         <h2>Location</h2>
 
         <label>Property Address:</label>
-        <input type="text" name="property_address" placeholder="Street Address" required>
+        <input type="text" name="property_address" required>
 
         <label>City:</label>
         <input type="text" name="city" required>
