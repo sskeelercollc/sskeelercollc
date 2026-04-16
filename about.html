@@ -171,10 +171,30 @@
       we’d be glad to connect.
     </p>
 
-    <a href="contact.html" 
-       style="display:inline-block; padding:10px 20px; background:#2f5d50; color:white; text-decoration:none; border-radius:5px;">
-       Contact Us
-    </a>
+       <form action="https://formspree.io/f/xqewaqpk" method="POST">
+    <!-- HIDDEN FIELD (put it here) -->
+    <input type="hidden" name="source" value="Home Page">
+    <input type="text" name="name" placeholder="Your Name" required 
+      style="width:100%; padding:10px; margin-bottom:10px;">
+
+    <input type="email" name="email" placeholder="Your Email" required 
+      style="width:100%; padding:10px; margin-bottom:10px;">
+
+    <input type="text" name="organization" placeholder="Organization"
+      style="width:100%; padding:10px; margin-bottom:10px;">
+
+    <textarea name="message" placeholder="Tell us about your project" required
+      style="width:100%; padding:10px; margin-bottom:10px;"></textarea>
+
+    <button type="submit" 
+      style="padding:10px 20px; background:#2f5d50; color:white; border:none; border-radius:5px;">
+      Submit Inquiry
+    </button>
+     <p style="font-size:12px; margin-top:10px;">
+     By submitting this form, you agree to our 
+     <a href="privacy.html">Privacy Policy</a>.
+     </p>
+  </form>
   </section>
 </div>
 </main>
