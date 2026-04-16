@@ -205,10 +205,10 @@
 <!-- ✅ NEW SELLER BUTTON SECTION -->
 <section style="text-align:center; margin-top:30px;">
   <h3>Have a Property to Discuss?</h3>
-  <p>Submit detailed property information through our seller questionnaire.</p>
+  <p>Submit detailed property information through our Project Inquiry Form.</p>
 
   <a href="seller-qa.html" class="primary-button">
-    Seller Property Questionnaire
+    Project Inquiry
   </a>
 </section>
 
@@ -219,6 +219,8 @@
   <form action="https://formspree.io/f/xqewaqpk" method="POST">
     <!-- HIDDEN FIELD (put it here) -->
    <input type="hidden" name="source" value="Home Page">
+    <!-- SPAM PROTECTION -->
+    <input type="text" name="_gotcha" style="display:none">
     <input type="text" name="name" placeholder="Your Name" required 
       style="width:100%; padding:10px; margin-bottom:10px;">
 
