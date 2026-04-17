@@ -342,6 +342,16 @@ By submitting this form, you agree to our
 <footer>
 <p>© 2026 SS Keeler Co, LLC</p>
 </footer>
+    
+<script>
+  const today = new Date();
 
+  // Format: MM-DD-YYYY
+  const formattedDate = today.getFullYear() + '-' +
+    String(today.getMonth() + 1).padStart(2, '0') + '-' +
+    String(today.getDate()).padStart(2, '0');
+
+  document.getElementById('submission_date').value = formattedDate;
+</script>
 </body>
 </html>
