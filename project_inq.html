@@ -1,4 +1,178 @@
-<div class="container">
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Property Questionnaire by SS Keeler Co LLC.">
+    <title>Property Questionnaire | SS Keeler Co, LLC</title>
+
+    <!-- FAVICON -->
+    <link rel="icon" href="/favicon.ico?v=2">
+    <link rel="shortcut icon" href="/favicon.ico">
+
+    <!-- GOOGLE FONT -->
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- STYLES -->
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Libre Baskerville', serif;
+            line-height: 1.6;
+            background-color: #000;
+        }
+
+        header {
+            background:#2f5d50;
+            color:white;
+            padding:20px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            position:relative;
+            text-align:center;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .container h2 {
+            margin-top: 30px;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 5px;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .large-textarea {
+            min-height: 180px;
+        }
+
+        button {
+            margin-top: 25px;
+            padding: 12px 20px;
+            border: none;
+            background-color: #2f5d50;
+            color: white;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #24473d;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: #222;
+            color: white;
+        }
+
+        /* MOBILE */
+        @media (max-width: 768px) {
+
+    header {
+      flex-direction: column;
+      text-align: center;
+      padding: 20px !important;
+    }
+
+    header img:first-of-type {
+      position: static !important;
+      width: 140px !important;
+      margin-bottom: 10px;
+      transform: none !important;
+    }
+
+    header img:last-of-type {
+      position: static !important;
+      width: 120px !important;
+      margin-top: 10px;
+    }
+
+    main {
+      padding: 20px !important;
+    }
+
+    h1 { font-size: 20px; }
+    h2 { font-size: 16px; }
+    h3 { font-size: 12px; }
+
+    form input,
+    form textarea {
+      font-size: 16px;
+    }
+  }
+    </style>
+</head>
+
+<body>
+
+<header>
+
+    <!-- LEFT LOGO (CLICKABLE) -->
+    <a href="index.html">
+        <img src="S. S. Keeler Co. - Black.png" 
+             alt="SS Keeler Co Logo"
+             style="position:absolute; left:20px; top:50%; transform:translateY(-50%); width:160px;">
+    </a>
+
+    <!-- CENTER TEXT -->
+    <div style="text-align:center;">
+    <h1 style="margin:0;">SS Keeler Co, LLC</h1>
+    <h2 style="font-weight: normal; margin:5px 0;">Jefferson, IA 50129</h2>
+    <h3 style="font-weight: normal; margin:5px 0;">
+        contact@sskeelercollc.com / ( 5 1 5 ) 5 3 1 - 2 5 2 1
+    </h3>
+    </div>
+
+    <!-- RIGHT TOWER IMAGE -->
+    <a href="https://cityofjeffersoniowa.org/">
+        <img src="JeffersonIA_MahanayTower.jpg" 
+             alt="Mahanay Tower"
+             style="position:absolute; right:20px; top:50%; transform:translateY(-50%); width:100px;">
+    </a>
+
+</header>
+    
+<div>
+  <nav style="text-align:center; padding:10px; background:#f4f4f4;">
+    <a href="index.html">Home</a> |
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a> |
+    <a href="privacy.html">Privacy Statement</a>
+  </nav>
+</div>
+    
+<main>  
+
+    <div class="container">
 
 <div class="intro">
     <h1>Project Inquiry</h1>
@@ -73,85 +247,127 @@
 </div>
 </div>
 
-<!-- LOCATION -->
+<!-- PROPERTY DETAILS -->
 <div class="form-section">
-<h2>Property Location</h2>
-<p>Tell us where the project is located.</p>
+<h2>Property Details</h2>
+<p>Provide detailed information about the property.</p>
 
 <div class="form-grid">
 
-<h2>Property Details</h2>
+<div>
+<label>Property Type</label>
+<input type="text" name="property_type">
+</div>
 
-<label>Property Type:</label>
-<input type="text" name="property_type" placeholder="e.g. Retail, Multifamily, Office">
+<div>
+<label>Property Category</label>
+<input type="text" name="property_category">
+</div>
 
-<label>Property Category:</label>
-<input type="text" name="property_category" placeholder="e.g. Downtown, Mixed-Use">
-
-<label># of Units / Spaces:</label>
+<div>
+<label># of Units / Spaces</label>
 <input type="number" name="unit_spaces">
+</div>
 
-<label>Total # of Units:</label>
+<div>
+<label>Total # of Units</label>
 <input type="number" name="total_units">
+</div>
 
-<label>Total Square Footage:</label>
-<input type="number" name="square_footage" placeholder="e.g. 12000">
+<div>
+<label>Total Square Footage</label>
+<input type="number" name="square_footage">
+</div>
 
-<label>Year Built:</label>
+<div>
+<label>Year Built</label>
 <input type="number" name="year_built">
+</div>
 
-<label>Property Condition:</label>
-<textarea name="property_condition" placeholder="Describe overall condition"></textarea>
+<div class="full-width">
+<label>Property Condition</label>
+<textarea name="property_condition"></textarea>
+</div>
 
-<label>Known Repairs Needed:</label>
+<div class="full-width">
+<label>Known Repairs Needed</label>
 <textarea name="repairs_needed" class="large-textarea"></textarea>
+</div>
 
-<label>Major Issues:</label>
+<div class="full-width">
+<label>Major Issues</label>
 <textarea name="major_issues" class="large-textarea"></textarea>
+</div>
 
-<label>Asking Price ($):</label>
+<div>
+<label>Asking Price ($)</label>
 <input type="number" name="asking_price">
+</div>
 
-<label>Estimated Value ($):</label>
+<div>
+<label>Estimated Value ($)</label>
 <input type="number" name="estimated_value">
+</div>
 
-<label>Reason for Sale:</label>
+<div class="full-width">
+<label>Reason for Sale</label>
 <textarea name="reason_for_sale"></textarea>
+</div>
 
-<label>Current Occupancy (%):</label>
-<input type="number" name="occupancy_percent" placeholder="e.g. 85">
+<div>
+<label>Current Occupancy (%)</label>
+<input type="number" name="occupancy_percent">
+</div>
 
-<label>Total Monthly Rent ($):</label>
+<div>
+<label>Total Monthly Rent ($)</label>
 <input type="number" name="monthly_rent">
+</div>
 
-<label>Rent Breakdown (per unit):</label>
+<div class="full-width">
+<label>Rent Breakdown (per unit)</label>
 <textarea name="rent_breakdown" class="large-textarea"></textarea>
+</div>
 
-<label>Lease Type:</label>
+<div>
+<label>Lease Type</label>
 <select name="lease_type">
-    <option value="">Select</option>
-    <option>NNN</option>
-    <option>Gross</option>
-    <option>Modified Gross</option>
-    <option>CAM</option>
-    <option>Other</option>
+<option value="">Select</option>
+<option>NNN</option>
+<option>Gross</option>
+<option>Modified Gross</option>
+<option>CAM</option>
+<option>Other</option>
 </select>
+</div>
 
-<label>Other Income:</label>
+<div class="full-width">
+<label>Other Income</label>
 <textarea name="other_income" placeholder="Laundry, parking, etc."></textarea>
+</div>
 
-<label>Other Income:</label>
-<textarea name="other_income" placeholder="Laundry, parking, etc."></textarea>
+</div>
+</div>
 
-<label>Other Income:</label>
-<textarea name="other_income" placeholder="Laundry, parking, etc."></textarea>
-
+<!-- SUBMIT -->
+<div style="text-align:center; margin-top:30px;">
 <button type="submit">Submit Inquiry</button>
 
-<p style="font-size:12px; margin-top:10px; text-align:center;">
+<p style="font-size:12px; margin-top:10px;">
 By submitting this form, you agree to our 
 <a href="privacy.html">Privacy Policy</a>.
 </p>
+</div>
 
 </form>
 </div>
+
+
+</main>
+
+<footer>
+    <p>© 2026 SS Keeler Co, LLC</p>
+</footer>
+
+</body>
+</html>
