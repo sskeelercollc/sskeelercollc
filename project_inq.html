@@ -114,21 +114,41 @@
             color: white;
         }
 
-        @media (max-width: 768px) {
-            header {
-                flex-direction: column;
-            }
+       @media (max-width: 768px) {
 
-            header img {
-                position: static !important;
-                width: 120px !important;
-                margin: 10px auto;
-            }
+    header {
+      flex-direction: column;
+      text-align: center;
+      padding: 20px !important;
+    }
 
-            .form-grid {
-                grid-template-columns: 1fr;
-            }
-        }
+    header img:first-of-type {
+      position: static !important;
+      width: 140px !important;
+      margin-bottom: 10px;
+      transform: none !important;
+    }
+
+    header img:last-of-type {
+      position: static !important;
+      width: 120px !important;
+      margin-top: 10px;
+    }
+
+    main {
+      padding: 20px !important;
+    }
+
+    h1 { font-size: 20px; }
+    h2 { font-size: 16px; }
+    h3 { font-size: 12px; }
+
+    form input,
+    form textarea {
+      font-size: 16px;
+    }
+  }
+</style>
     </style>
 </head>
 
