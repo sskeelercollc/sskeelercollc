@@ -40,18 +40,11 @@
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
 
-        .container h2 {
-            margin-top: 30px;
-            border-bottom: 3px solid #eee;
-            padding-bottom: 5px;
-        }
-
-        /* TIGHTER GRID */
         .form-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            column-gap: 35px;
-            row-gap: 10px;
+            column-gap: 30px;
+            row-gap: 8px;
             margin-top: 15px;
         }
 
@@ -65,7 +58,7 @@
         }
 
         label {
-            margin-bottom: 5px;
+            margin-bottom: 4px;
             font-weight: bold;
         }
 
@@ -87,9 +80,8 @@
             min-height: 100px;
         }
 
-        /* TIGHTER SECTION SPACING */
         .form-section {
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
 
         button {
@@ -115,16 +107,6 @@
         }
 
         @media (max-width: 768px) {
-            header {
-                flex-direction: column;
-            }
-
-            header img {
-                position: static !important;
-                width: 120px !important;
-                margin: 10px auto;
-            }
-
             .form-grid {
                 grid-template-columns: 1fr;
             }
@@ -135,104 +117,15 @@
 <body>
 
 <header>
-
-<a href="index.html">
-<img src="S. S. Keeler Co. - Black.png" 
-style="position:absolute; left:20px; top:50%; transform:translateY(-50%); width:160px;">
-</a>
-
-<div>
-<h1 style="margin:0;">SS Keeler Co, LLC</h1>
-<h2 style="font-weight: normal; margin:5px 0;">Jefferson, IA 50129</h2>
-<h3 style="font-weight: normal; margin:5px 0;">
-contact@sskeelercollc.com / (515) 531-2521
-</h3>
-</div>
-
-<a href="https://cityofjeffersoniowa.org/">
-<img src="JeffersonIA_MahanayTower.jpg" 
-style="position:absolute; right:20px; top:50%; transform:translateY(-50%); width:100px;">
-</a>
-
+<h1 style="text-align:center;">Project Inquiry</h1>
+<p style="text-align:center;">Provide a brief overview of your property or project.</p>
 </header>
-
-<nav style="text-align:center; padding:10px; background:#f4f4f4;">
-<a href="index.html">Home</a> |
-<a href="about.html">About</a> |
-<a href="contact.html">Contact</a> |
-<a href="privacy.html">Privacy Statement</a>
-</nav>
 
 <main>
 
 <div class="container">
 
-<h1 style="text-align:center;">Project Inquiry</h1>
-<p style="text-align:center;">Provide a brief overview of your property or project.</p>
-    
 <form action="https://formspree.io/f/mgororvr" method="POST">
-
-<input type="hidden" name="source" value="Project Inquiry">
-<input type="text" name="_gotcha" style="display:none">
-
-<!-- CONTACT -->
-<div class="form-section">
-<h2>Contact Information</h2>
-
-<div class="form-grid">
-
-<div>
-<label>Full Name</label>
-<input type="text" name="full_name" required>
-</div>
-
-<div>
-<label>Email Address</label>
-<input type="email" name="email" required>
-</div>
-
-<div>
-<label>Phone Number</label>
-<input type="tel" name="phone">
-</div>
-
-<div>
-<label>Phone Type</label>
-<select name="phone_type">
-<option value="">Select</option>
-<option>Cell</option>
-<option>Work</option>
-<option>Home</option>
-</select>
-</div>
-
-<div>
-<label>Company</label>
-<input type="text" name="company">
-</div>
-
-<div>
-<label>Preferred Contact</label>
-<select name="preferred_contact">
-<option value="">Select</option>
-<option>Call</option>
-<option>Text</option>
-<option>Email</option>
-</select>
-</div>
-
-<div>
-<label>Best Time</label>
-<select name="preferred_time">
-<option value="">Select</option>
-<option>Morning</option>
-<option>Afternoon</option>
-<option>Evening</option>
-</select>
-</div>
-
-</div>
-</div>
 
 <!-- PROPERTY -->
 <div class="form-section">
@@ -240,14 +133,42 @@ style="position:absolute; right:20px; top:50%; transform:translateY(-50%); width
 
 <div class="form-grid">
 
+<!-- PROPERTY TYPE (DROPDOWN) -->
 <div>
 <label>Property Type</label>
-<input type="text" name="property_type">
+<select name="property_type">
+<option>NO SELECTION</option>
+<option>Single Family</option>
+<option>Duplex</option>
+<option>Triplex</option>
+<option>Quadplex</option>
+<option>Multifamily (5+ Units)</option>
+<option>Mixed-Use</option>
+<option>Retail</option>
+<option>Office</option>
+<option>Industrial</option>
+<option>Other</option>
+</select>
 </div>
 
+<!-- CATEGORY 1 -->
 <div>
-<label>Category</label>
-<input type="text" name="property_category">
+<label>Property Category #1</label>
+<select name="property_category_1">
+<option>NO SELECTION</option>
+<option>Residential</option>
+<option>Commercial</option>
+</select>
+</div>
+
+<!-- CATEGORY 2 -->
+<div>
+<label>Property Category #2</label>
+<select name="property_category_2">
+<option>NO SELECTION</option>
+<option>Residential</option>
+<option>Commercial</option>
+</select>
 </div>
 
 <div>
@@ -270,9 +191,17 @@ style="position:absolute; right:20px; top:50%; transform:translateY(-50%); width
 <input type="number" name="year_built">
 </div>
 
-<div class="full-width">
-<label>Condition</label>
-<textarea name="property_condition"></textarea>
+<!-- PROPERTY CONDITION (DROPDOWN) -->
+<div>
+<label>Property Condition</label>
+<select name="property_condition">
+<option>NO SELECTION</option>
+<option>Excellent</option>
+<option>Good</option>
+<option>Fair</option>
+<option>Poor</option>
+<option>Distressed</option>
+</select>
 </div>
 
 <div class="full-width">
@@ -285,96 +214,27 @@ style="position:absolute; right:20px; top:50%; transform:translateY(-50%); width
 <textarea name="major_issues" class="large-textarea"></textarea>
 </div>
 
+<!-- CURRENCY FIELDS -->
 <div>
-<label>Asking Price</label>
-<input type="number" name="asking_price">
-</div>
-
-<div>
-<label>Estimated Value</label>
-<input type="number" name="estimated_value">
-</div>
-
-<div class="full-width">
-<label>Reason for Sale</label>
-<textarea name="reason_for_sale"></textarea>
+<label>Asking Price ($)</label>
+<input type="number" step="0.01" min="0" name="asking_price">
 </div>
 
 <div>
-<label>Occupancy (%)</label>
-<input type="number" name="occupancy_percent">
+<label>Estimated Value ($)</label>
+<input type="number" step="0.01" min="0" name="estimated_value">
 </div>
 
 <div>
-<label>Monthly Rent</label>
-<input type="number" name="monthly_rent">
-</div>
-
-<div class="full-width">
-<label>Rent Breakdown</label>
-<textarea name="rent_breakdown"></textarea>
-</div>
-
-<div>
-<label>Lease Type</label>
-<select name="lease_type">
-<option>NNN</option>
-<option>Gross</option>
-<option>Modified</option>
-<option>CAM</option>
-</select>
+<label>Total Monthly Rent ($)</label>
+<input type="number" step="0.01" min="0" name="monthly_rent">
 </div>
 
 </div>
-</div>
-
-<!-- OTHER INCOME -->
-<div class="form-section">
-<h2>Additional Other Income</h2>
-
-<div class="form-grid">
-
-<div>
-<label>Income Type 1</label>
-<input type="text" name="other_income_1_type">
-</div>
-
-<div>
-<label>Amount 1</label>
-<input type="number" step="0.01" min="0" name="other_income_1_amount">
-</div>
-
-<div>
-<label>Income Type 2</label>
-<input type="text" name="other_income_2_type">
-</div>
-
-<div>
-<label>Amount 2</label>
-<input type="number" step="0.01" min="0" name="other_income_2_amount">
-</div>
-
-<div>
-<label>Income Type 3</label>
-<input type="text" name="other_income_3_type">
-</div>
-
-<div>
-<label>Amount 3</label>
-<input type="number" step="0.01" min="0" name="other_income_3_amount">
-</div>
-
-</div>
-</div>
-
-<div style="text-align:center;">
-<button type="submit">Submit Inquiry</button>
-<p style="font-size:12px;">
-By submitting, you agree to our <a href="privacy.html">Privacy Policy</a>.
-</p>
 </div>
 
 </form>
+
 </div>
 
 </main>
