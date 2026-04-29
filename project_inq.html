@@ -40,6 +40,12 @@
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
 
+        .container h2 {
+            margin-top: 30px;
+            border-bottom: 3px solid #eee;
+            padding-bottom: 5px;
+        }
+
         .form-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -107,6 +113,16 @@
         }
 
         @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+            }
+
+            header img {
+                position: static !important;
+                width: 120px !important;
+                margin: 10px auto;
+            }
+
             .form-grid {
                 grid-template-columns: 1fr;
             }
@@ -117,15 +133,45 @@
 <body>
 
 <header>
-<h1 style="text-align:center;">Project Inquiry</h1>
-<p style="text-align:center;">Provide a brief overview of your property or project.</p>
+
+<a href="index.html">
+<img src="S. S. Keeler Co. - Black.png" 
+style="position:absolute; left:20px; top:50%; transform:translateY(-50%); width:160px;">
+</a>
+
+<div>
+<h1 style="margin:0;">SS Keeler Co, LLC</h1>
+<h2 style="font-weight: normal; margin:5px 0;">Jefferson, IA 50129</h2>
+<h3 style="font-weight: normal; margin:5px 0;">
+contact@sskeelercollc.com / (515) 531-2521
+</h3>
+</div>
+
+<a href="https://cityofjeffersoniowa.org/">
+<img src="JeffersonIA_MahanayTower.jpg" 
+style="position:absolute; right:20px; top:50%; transform:translateY(-50%); width:100px;">
+</a>
+
 </header>
+
+<nav style="text-align:center; padding:10px; background:#f4f4f4;">
+<a href="index.html">Home</a> |
+<a href="about.html">About</a> |
+<a href="contact.html">Contact</a> |
+<a href="privacy.html">Privacy Statement</a>
+</nav>
 
 <main>
 
 <div class="container">
 
+<h1>Project Inquiry</h1>
+<p>Provide a brief overview of your property or project.</p>
+
 <form action="https://formspree.io/f/mgororvr" method="POST">
+
+<input type="hidden" name="source" value="Project Inquiry">
+<input type="text" name="_gotcha" style="display:none">
 
 <!-- PROPERTY -->
 <div class="form-section">
@@ -133,7 +179,7 @@
 
 <div class="form-grid">
 
-<!-- PROPERTY TYPE (DROPDOWN) -->
+<!-- PROPERTY TYPE -->
 <div>
 <label>Property Type</label>
 <select name="property_type">
@@ -191,7 +237,7 @@
 <input type="number" name="year_built">
 </div>
 
-<!-- PROPERTY CONDITION (DROPDOWN) -->
+<!-- CONDITION -->
 <div>
 <label>Property Condition</label>
 <select name="property_condition">
@@ -233,8 +279,14 @@
 </div>
 </div>
 
-</form>
+<div style="text-align:center;">
+<button type="submit">Submit Inquiry</button>
+<p style="font-size:12px;">
+By submitting, you agree to our <a href="privacy.html">Privacy Policy</a>.
+</p>
+</div>
 
+</form>
 </div>
 
 </main>
