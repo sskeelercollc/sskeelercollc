@@ -197,7 +197,8 @@ style="position:absolute; right:20px; top:50%; transform:translateY(-50%); width
 
 <form action="https://formspree.io/f/xzdopjjz" method="POST">
 
-<input type="hidden" name="source" value="Project Inquiry">
+<input type="hidden" name="lead_source" id="lead_source">
+
 <input type="text" name="_gotcha" style="display:none">
 
 <!-- CONTACT -->
@@ -451,6 +452,19 @@ By submitting, you agree to our <a href="privacy.html">Privacy Policy</a>.
 <footer>
 <p>© 2026 SS Keeler Co, LLC</p>
 </footer>
+
+<script>
+let ref = document.referrer;
+
+let source = "Direct / Unknown";
+
+if (ref.includes("google")) source = "Google";
+else if (ref.includes("facebook")) source = "Facebook";
+else if (ref.includes("bing")) source = "Bing";
+else if (ref) source = "Referral";
+
+document.getElementById("lead_source").value = source;
+</script>
 
 </body>
 </html>
