@@ -46,7 +46,6 @@
             padding-bottom: 5px;
         }
 
-        /* GRID WITH PROPER SPACING */
         .form-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -220,8 +219,7 @@ style="position:absolute; right:20px; top:50%; transform:translateY(-50%); width
 </select>
 </div>
 
-<div class="half-width">
-    
+<div>
 <label>Best Time</label>
 <select name="preferred_time">
 <option value="">Select</option>
@@ -325,18 +323,43 @@ style="position:absolute; right:20px; top:50%; transform:translateY(-50%); width
 </select>
 </div>
 
-<div class="full-width">
+</div>
+</div>
+
+<!-- OTHER INCOME -->
 <div class="form-section">
 <h2>Additional Other Income</h2>
-    
+
 <div class="form-grid">
-    
-<textarea name="other_income_1_type"></textarea>
-<textarea name="other_income_1_amount"></textarea>
-<textarea name="other_income_2_type"></textarea>
-<textarea name="other_income_2_amount"></textarea>
-<textarea name="other_income_3_type"></textarea>
-<textarea name="other_income-3_amount"></textarea>
+
+<div>
+<label>Income Type 1</label>
+<input type="text" name="other_income_1_type">
+</div>
+
+<div>
+<label>Amount 1</label>
+<input type="number" step="0.01" min="0" name="other_income_1_amount">
+</div>
+
+<div>
+<label>Income Type 2</label>
+<input type="text" name="other_income_2_type">
+</div>
+
+<div>
+<label>Amount 2</label>
+<input type="number" step="0.01" min="0" name="other_income_2_amount">
+</div>
+
+<div>
+<label>Income Type 3</label>
+<input type="text" name="other_income_3_type">
+</div>
+
+<div>
+<label>Amount 3</label>
+<input type="number" step="0.01" min="0" name="other_income_3_amount">
 </div>
 
 </div>
