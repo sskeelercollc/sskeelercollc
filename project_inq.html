@@ -206,7 +206,7 @@ style="position:absolute; right:20px; top:50%; transform:translateY(-50%); width
 
 <div>
 <label>Full Name</label>
-<input type="text" name="full_name" required>
+<input type="text" name="fullname" required>
 </div>
 
 <div>
@@ -221,7 +221,7 @@ style="position:absolute; right:20px; top:50%; transform:translateY(-50%); width
 
 <div>
 <label>Phone Type</label>
-<select name="phone_type">
+<select name="phonetype">
 <option value="">Select</option>
 <option>Cell</option>
 <option>Work</option>
@@ -236,7 +236,7 @@ style="position:absolute; right:20px; top:50%; transform:translateY(-50%); width
 
 <div>
 <label>Preferred Contact</label>
-<select name="preferred_contact">
+<select name="preferredcontact">
 <option value="">Select</option>
 <option>Call</option>
 <option>Text</option>
@@ -246,7 +246,7 @@ style="position:absolute; right:20px; top:50%; transform:translateY(-50%); width
 
 <div>
 <label>Best Time</label>
-<select name="preferred_time">
+<select name="preferredtime">
 <option value="">Select</option>
 <option>Morning</option>
 <option>Afternoon</option>
@@ -266,8 +266,8 @@ style="position:absolute; right:20px; top:50%; transform:translateY(-50%); width
 <!-- PROPERTY TYPE -->
 
 <div>
-<label>Property Address</label>
-<input type="address" name="property_address">  
+<label>Address</label>
+<input type="address" name="address">  
 </div>
 
 <div>
@@ -282,12 +282,12 @@ style="position:absolute; right:20px; top:50%; transform:translateY(-50%); width
 
 <div>
 <label>Zip Code</label>
-<input type="zipcode" name="zipcode">  
+<input type="zipcode" name="zip">  
 </div>
 
 <div>
 <label>Property Type                   </label>
-<select name="property_type">
+<select name="propertytype">
 <option>NO SELECTION</option>
 <option>Single Family</option>
 <option>Duplex</option>
@@ -305,7 +305,7 @@ style="position:absolute; right:20px; top:50%; transform:translateY(-50%); width
 <!-- CONDITION -->
 <div>
 <label>Property Condition</label>
-<select name="property_condition">
+<select name="propertycondition">
 <option>NO SELECTION</option>
 <option>Excellent</option>
 <option>Good</option>
@@ -318,8 +318,8 @@ style="position:absolute; right:20px; top:50%; transform:translateY(-50%); width
 
 <!-- CATEGORY 1 -->
 <div>
-<label>Property Category #1</label>
-<select name="property_category_1">
+<label>Property (Category #1)</label>
+<select name="propertycategory1">
 <option>NO SELECTION</option>
 <option>Residential</option>
 <option>Commercial</option>
@@ -328,13 +328,13 @@ style="position:absolute; right:20px; top:50%; transform:translateY(-50%); width
 
 <div>
 <label>Units (Category #1)</label>
-<input type="number" name="category_1_units">
+<input type="number" name="category1units">
 </div>
 
 <!-- CATEGORY 2 -->
 <div>
-<label>Property Category #2</label>
-<select name="property_category_2">
+<label>Property (Category #2)</label>
+<select name="propertycategory2">
 <option>NO SELECTION</option>
 <option>Residential</option>
 <option>Commercial</option>
@@ -343,63 +343,63 @@ style="position:absolute; right:20px; top:50%; transform:translateY(-50%); width
 
 <div>
 <label>Units (Category #2)</label>
-<input type="number" name="category_2_units">
+<input type="number" name="category2units">
 </div>
 
 <div>
-<label>Square Footage                     </label>
-<input type="number" name="square_footage">
+<label>Square Footage</label>
+<input type="number" name="squarefootage">
 </div>
 
 <div>
 <label>Total Property Units</label>
-<input type="number" name="total_units">
+<input type="number" name="totalunits">
 </div>
 
 <div>
 <label>Year Built</label>
-<input type="number" name="year_built">
+<input type="year" name="yearbuilt">
 </div>
 
 <div class="full-width">
 <label>Repairs Needed</label>
-<textarea name="repairs_needed" class="large-textarea"></textarea>
+<textarea name="repairs" class="large-textarea"></textarea>
 </div>
 
 <div class="full-width">
 <label>Major Issues</label>
-<textarea name="major_issues" class="large-textarea"></textarea>
+<textarea name="issues" class="large-textarea"></textarea>
 </div>
 
 <div>
-<label>Asking Price ($)            </label>
-<input type="number" step="0.01" min="0" name="asking_price">
+<label>Asking Price ($)</label>
+<input type="currency" step="0.01" min="0" name="asking">
 </div>
 
 
 <div>
 <label>Estimated Value ($)</label>
-<input type="number" step="0.01" min="0" name="estimated_value">
+<input type="currency" step="0.01" min="0" name="estvalue">
 </div>
 
 <div class="full-width">
 <label>Reason for Sale</label>
-<textarea name="reason_for_sale"></textarea>
+<textarea name="reason"></textarea>
 </div>
 
 <div>
 <label>Occupancy (%)                </label>
-<input type="number" name="occupancy_percent">
+<input type="number" name="occupancy">
 </div>
 
 <div>
 <label>Total Monthly Rent ($)</label>
-<input type="number" step="0.01" min="0" name="monthly_rent">
+<input type="currency" step="0.01" min="0" name="monthlyrent">
 </div>
 
 <div class="full-width">
 <label>Rent Breakdown</label>
-<textarea name="rent_breakdown"></textarea>
+<textarea name="rentbreakdown"></textarea>
 </div>
 
 <div>
@@ -422,42 +422,42 @@ style="position:absolute; right:20px; top:50%; transform:translateY(-50%); width
 
 <div>
 <label>Income Type 1</label>
-<input type="text" name="other_income_1_type">
+<input type="text" name="income1type">
 </div>
 
 <div>
 <label>Amount 1 ($) </label>
-<input type="number" step="0.01" min="0" name="other_income_1_amount">
+<input type="currency" step="0.01" min="0" name="income1amount">
 </div>
 
 <div>
 <label>Income Type 2</label>
-<input type="text" name="other_income_2_type">
+<input type="text" name="income2type">
 </div>
 
 <div>
 <label>Amount 2 ($) </label>
-<input type="number" step="0.01" min="0" name="other_income_2_amount">
+<input type="currency" step="0.01" min="0" name="income2amount">
 </div>
 
 <div>
 <label>Income Type 3</label>
-<input type="text" name="other_income_3_type">
+<input type="text" name="income3type">
 </div>
 
 <div>
 <label>Amount 3 ($) </label>
-<input type="number" step="0.01" min="0" name="other_income_3_amount">
+<input type="currency" step="0.01" min="0" name="income3amount">
 </div>
     
 <div>
 <label>Income Type 4</label>
-<input type="text" name="other_income_4_type">
+<input type="text" name="income4type">
 </div>
 
 <div>
 <label>Amount 4 ($) </label>
-<input type="number" step="0.01" min="0" name="other_income_4_amount">
+<input type="currency" step="0.01" min="0" name="income4amount">
 </div>
 
 
@@ -468,7 +468,7 @@ style="position:absolute; right:20px; top:50%; transform:translateY(-50%); width
 <h2>Additional Comments</h2>
 
 <div class="full-width">
-<textarea name="additional_comments"></textarea>
+<textarea name="comments"></textarea>
 </div>
 </div>
 
