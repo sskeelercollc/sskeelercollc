@@ -1,0 +1,309 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Flight Log | INCOR DISCS</title>
+<meta name="description" content="Disc golf culture, course spotlights, gear guides, tournaments, and stories from INCOR DISCS.">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Sans:wght@400;500;600;700&family=Permanent+Marker&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+<style>
+:root{--black:#080808;--panel:#121212;--paper:#f4f0e7;--lime:#d4ff00;--purple:#a879ff;--orange:#ff6537;--blue:#67d7ff;--line:#343434;--muted:#aaa69c}
+*{box-sizing:border-box}
+body{margin:0;background:var(--black);color:var(--paper);font-family:'DM Sans',sans-serif}
+a{color:inherit;text-decoration:none}
+.wrap{width:min(1180px,92%);margin:auto}
+.ticker{background:var(--lime);color:#080808;overflow:hidden;white-space:nowrap;padding:10px 0;font-size:.72rem;font-weight:900;letter-spacing:.13em}
+.ticker span{display:inline-block;padding-left:100%;animation:slide 26s linear infinite}
+@keyframes slide{to{transform:translateX(-100%)}}
+header{position:sticky;top:0;z-index:10;background:#080808ed;border-bottom:1px solid var(--line);backdrop-filter:blur(10px)}
+.nav{min-height:78px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.brand{font-family:'Archivo Black',sans-serif;font-size:1.25rem;line-height:.95}
+.brand span{display:block;color:var(--lime);font-family:'Permanent Marker',cursive;font-size:.8rem;margin-top:7px}
+.links{display:flex;align-items:center;gap:20px;font-size:.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em}
+.links a:hover{color:var(--lime)}
+.admin{border:1px solid var(--lime);color:var(--lime);padding:10px 12px}
+.hero{padding:70px 0 38px}
+.eyebrow{color:var(--lime);font-size:.75rem;font-weight:900;text-transform:uppercase;letter-spacing:.16em}
+.hero h1{font-family:'Archivo Black',sans-serif;text-transform:uppercase;font-size:clamp(3.5rem,10vw,8.5rem);line-height:.83;letter-spacing:-.075em;margin:22px 0}
+.hero h1 em{font-family:'Permanent Marker',cursive;color:var(--orange);font-style:normal;letter-spacing:-.04em}
+.intro{display:flex;justify-content:space-between;align-items:end;gap:25px;margin-top:34px}
+.intro p{max-width:520px;color:#c4c0b7;line-height:1.75;margin:0}
+.scribble{font-family:'Permanent Marker',cursive;color:var(--purple);font-size:1.5rem;transform:rotate(-6deg)}
+.section-head{display:flex;justify-content:space-between;align-items:end;gap:16px;border-bottom:1px solid var(--line);padding-bottom:14px;margin:35px 0 22px}
+.section-head h2{font-family:'Archivo Black',sans-serif;text-transform:uppercase;letter-spacing:-.04em;font-size:1.55rem;margin:0}
+.section-head small{color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
+.featured{display:grid;grid-template-columns:1.1fr .9fr;background:var(--lime);color:#080808;margin-bottom:48px;min-height:350px}
+.feature-art{min-height:320px;background:radial-gradient(circle at 70% 25%,#ff6537 0 8%,transparent 8.5%),radial-gradient(circle at 25% 78%,#a879ff 0 13%,transparent 13.5%),linear-gradient(135deg,#101010 0 45%,#252525 45% 50%,#101010 50%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;padding:24px}
+.feature-art img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.stamp{font-family:'Archivo Black',sans-serif;color:var(--lime);font-size:clamp(3rem,7vw,6.5rem);line-height:.8;text-align:center;text-shadow:5px 5px 0 var(--orange),10px 10px 0 var(--purple);transform:rotate(-7deg);z-index:1}
+.feature-copy{padding:clamp(24px,4vw,50px);display:flex;flex-direction:column;align-items:flex-start;justify-content:center}
+.tag{display:inline-block;border:1px solid currentColor;padding:7px 9px;font-size:.67rem;font-weight:900;text-transform:uppercase;letter-spacing:.1em}
+.feature-copy h2{font-family:'Archivo Black',sans-serif;text-transform:uppercase;font-size:clamp(1.8rem,3.6vw,3.3rem);line-height:.98;letter-spacing:-.055em;margin:18px 0}
+.feature-copy p{line-height:1.7}
+.meta{font-size:.73rem;text-transform:uppercase;letter-spacing:.1em;opacity:.75}
+.read{margin-top:15px;padding:0 0 5px;border:0;border-bottom:3px solid currentColor;background:none;color:inherit;font-weight:900;text-transform:uppercase;cursor:pointer}
+.tools{display:flex;flex-wrap:wrap;gap:12px;margin:18px 0 25px}
+.search{flex:1;min-width:220px;background:#111;color:var(--paper);border:1px solid var(--line);padding:14px}
+.search:focus{outline:1px solid var(--lime)}
+.filters{display:flex;flex-wrap:wrap;gap:8px}
+.filter{background:transparent;color:var(--paper);border:1px solid #444;padding:10px 13px;font-size:.7rem;font-weight:900;text-transform:uppercase;cursor:pointer}
+.filter.active,.filter:hover{background:var(--lime);border-color:var(--lime);color:#080808}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-bottom:70px}
+.post{background:var(--panel);border:1px solid #292929;cursor:pointer;display:flex;flex-direction:column;transition:transform .2s,border-color .2s;min-width:0}
+.post:hover{transform:translateY(-4px);border-color:var(--lime)}
+.post-image{height:205px;background:linear-gradient(135deg,#202020,#0c0c0c);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.post-image img{width:100%;height:100%;object-fit:cover}
+.artword{font-family:'Archivo Black',sans-serif;font-size:3rem;color:var(--lime);transform:rotate(-8deg);text-shadow:4px 4px var(--purple)}
+.post-body{padding:22px;display:flex;flex-direction:column;flex:1}
+.post-body .tag{color:var(--blue);align-self:flex-start;margin-bottom:13px}
+.post-body h3{font-family:'Archivo Black',sans-serif;text-transform:uppercase;font-size:1.4rem;line-height:1.05;letter-spacing:-.04em;margin:0 0 12px}
+.post-body p{color:#bdb9b0;font-size:.9rem;line-height:1.65;margin:0 0 20px}
+.post-bottom{margin-top:auto;display:flex;justify-content:space-between;gap:10px;color:var(--muted);font-size:.68rem;text-transform:uppercase;letter-spacing:.06em}
+.empty{grid-column:1/-1;padding:42px 20px;border:1px dashed #444;color:var(--muted);text-align:center;line-height:1.7}
+.about{background:#171717;border-block:1px solid var(--line);padding:45px 0}
+.about-inner{display:flex;justify-content:space-between;align-items:center;gap:25px}
+.about h2{font-family:'Archivo Black',sans-serif;text-transform:uppercase;font-size:clamp(1.8rem,4vw,3.2rem);line-height:.95;margin:0}
+.about h2 span{color:var(--purple)}
+.about p{max-width:360px;color:#c4c0b7;line-height:1.7}
+footer{padding:28px 0;color:var(--muted);font-size:.78rem}
+.footer-inner{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap}
+footer strong{font-family:'Archivo Black',sans-serif;color:var(--paper)}
+.modal{display:none;position:fixed;inset:0;z-index:30;overflow:auto;background:#000e;padding:25px 14px}
+.modal.open{display:block}
+.modal-panel{position:relative;max-width:850px;margin:25px auto;background:var(--paper);color:#111;padding:clamp(22px,5vw,58px)}
+.close{position:absolute;right:12px;top:12px;background:#111;color:white;border:0;width:42px;height:42px;font-size:1.4rem;cursor:pointer}
+.modal h2{font-family:'Archivo Black',sans-serif;text-transform:uppercase;font-size:clamp(2.1rem,6vw,4.5rem);line-height:.92;letter-spacing:-.06em;margin:18px 0}
+.modal-meta{font-size:.73rem;text-transform:uppercase;letter-spacing:.1em;color:#555;margin-bottom:24px}
+.article-copy{font-size:1.04rem;line-height:1.85;white-space:pre-wrap;overflow-wrap:anywhere}
+.gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:28px}
+.gallery img{width:100%;display:block;max-height:560px;object-fit:cover;background:#ddd}
+.status{color:var(--muted);font-size:.9rem;margin:12px 0 30px}
+@media(max-width:800px){.links{gap:10px}.links a:not(.admin){display:none}.featured{grid-template-columns:1fr}.feature-art{min-height:240px}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.intro,.about-inner{align-items:flex-start;flex-direction:column}.scribble{align-self:flex-end}}
+@media(max-width:520px){.hero{padding-top:48px}.grid{grid-template-columns:1fr}.post-image{height:230px}.section-head{align-items:flex-start;flex-direction:column}.gallery{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="ticker"><span>INCOR DISCS • THROW YOUR OWN LINE • COURSE CULTURE • GEAR THAT FLIES • GOOD PEOPLE / GOOD ROUNDS • INCOR DISCS • </span></div>
+<header><div class="wrap nav">
+<a class="brand" href="index.html">INCOR DISCS<span>THE FLIGHT LOG ↗</span></a>
+<nav class="links" aria-label="Main navigation">
+<a href="index.html">Home</a><a href="shop.html">Shop</a><a href="about.html">About</a><a href="contact.html">Contact</a><a class="admin" href="admin.html">Writer Login ↗</a>
+</nav></div></header>
+
+<main class="wrap">
+<section class="hero">
+<div class="eyebrow">Field notes • Flight paths • Disc golf culture</div>
+<h1>Life's better<br>in <em>flight.</em></h1>
+<div class="intro"><p>The stories behind the throws. Course discoveries, gear talk, tournament weekends, everyday rounds, and whatever else finds its way into our orbit.</p><div class="scribble">Keep it in the fairway-ish!</div></div>
+</section>
+
+<section>
+<div class="section-head"><h2>On the radar</h2><small>Featured story · <span id="featuredDate">Fresh off the course</span></small></div>
+<div id="featured" class="featured">
+<div class="feature-art"><div class="stamp">FLIGHT<br>LOG</div></div>
+<div class="feature-copy"><span class="tag">The Flight Log</span><h2>Good things are in the air.</h2><p>Course notes, disc talk, and field reports from the INCOR crew are on the way.</p></div>
+</div>
+</section>
+
+<section id="stories">
+<div class="section-head"><h2>Latest transmissions</h2><small id="postCount">Loading stories…</small></div>
+<div class="tools">
+<input class="search" id="searchInput" type="search" placeholder="Search stories, courses, gear…" aria-label="Search stories">
+<div class="filters" id="filters">
+<button class="filter active" data-category="all">All stories</button>
+<button class="filter" data-category="courses">Courses</button>
+<button class="filter" data-category="gear">Gear</button>
+<button class="filter" data-category="tournaments">Tournaments</button>
+<button class="filter" data-category="culture">Culture</button>
+<button class="filter" data-category="news">News</button>
+</div></div>
+<div id="postGrid" class="grid"><div class="empty">Connecting to The Flight Log…</div></div>
+<div id="loadStatus" class="status" role="status" aria-live="polite"></div>
+</section>
+</main>
+
+<section class="about"><div class="wrap about-inner">
+<h2>Not just a game.<br><span>A whole way to fly.</span></h2>
+<p>The Flight Log is the living notebook of INCOR DISCS — written from the course, for the community. Have a story idea? Get in touch and let's talk.</p>
+</div></section>
+<footer><div class="wrap footer-inner"><div><strong>INCOR DISCS</strong> · The Flight Log</div><div>Throw your own line. © <span id="year"></span> INCOR DISCS</div></div></footer>
+
+<div class="modal" id="articleModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+<article class="modal-panel">
+<button class="close" id="closeModal" aria-label="Close article">×</button>
+<span class="tag" id="modalCategory">STORY</span><h2 id="modalTitle"></h2>
+<div class="modal-meta" id="modalMeta"></div>
+<div class="article-copy" id="modalCopy"></div>
+<div class="gallery" id="modalGallery"></div>
+</article></div>
+
+<script>
+(() => {
+  const cfg = window.FLIGHT_LOG_CONFIG || {};
+  const configured = cfg.SUPABASE_URL && cfg.SUPABASE_ANON_KEY &&
+    !cfg.SUPABASE_URL.includes("YOUR-PROJECT") &&
+    !cfg.SUPABASE_ANON_KEY.includes("YOUR_SUPABASE");
+  const db = configured && window.supabase
+    ? window.supabase.createClient(cfg.SUPABASE_URL, cfg.SUPABASE_ANON_KEY)
+    : null;
+  const grid = document.getElementById("postGrid");
+  const featured = document.getElementById("featured");
+  const search = document.getElementById("searchInput");
+  const filters = document.getElementById("filters");
+  const status = document.getElementById("loadStatus");
+  let posts = [], activeCategory = "all";
+  document.getElementById("year").textContent = new Date().getFullYear();
+
+  const esc = value => String(value ?? "").replace(/[&<>"']/g, c => ({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+  }[c]));
+  const dateFmt = value => value ? new Date(value).toLocaleDateString(undefined,
+    {year:"numeric",month:"short",day:"numeric"}) : "Recently";
+  const categoryLabel = value => ({
+    courses:"Course notes",gear:"Gear",tournaments:"Tournaments",
+    culture:"Culture",news:"News"
+  })[value] || "The Flight Log";
+
+  function imageUrl(path) {
+    if (!path) return "";
+    if (/^https?:\/\//i.test(path)) return path;
+    return db.storage.from("flight-log").getPublicUrl(path).data.publicUrl;
+  }
+
+  function card(post, index) {
+    const cover = imageUrl(post.cover_image_path);
+    const words = ["FLY.","CHAIN!","LOCAL.","SEND IT.","AIR TIME."];
+    return `<article class="post" tabindex="0" role="button" aria-label="Read ${esc(post.title)}" data-id="${esc(post.id)}">
+      <div class="post-image">${cover
+        ? `<img src="${esc(cover)}" alt="${esc(post.cover_alt || post.title)}" loading="lazy">`
+        : `<span class="artword">${words[index % words.length]}</span>`}</div>
+      <div class="post-body"><span class="tag">${esc(categoryLabel(post.category))}</span>
+      <h3>${esc(post.title)}</h3><p>${esc(post.excerpt || "Read this story from The Flight Log.")}</p>
+      <div class="post-bottom"><span>${esc(dateFmt(post.published_at || post.created_at))}</span><span>Read story ↗</span></div></div>
+    </article>`;
+  }
+
+  function renderFeatured(post) {
+    if (!post) {
+      featured.innerHTML = `<div class="feature-art"><div class="stamp">FLIGHT<br>LOG</div></div>
+      <div class="feature-copy"><span class="tag">The Flight Log</span><h2>Good things are in the air.</h2>
+      <p>Course notes, disc talk, and field reports from the INCOR crew are on the way.</p></div>`;
+      return;
+    }
+    const cover = imageUrl(post.cover_image_path);
+    featured.innerHTML = `<div class="feature-art">${cover
+      ? `<img src="${esc(cover)}" alt="${esc(post.cover_alt || post.title)}">`
+      : `<div class="stamp">FEATURED<br>FLIGHT</div>`}</div>
+      <div class="feature-copy"><span class="tag">${esc(categoryLabel(post.category))} · Featured</span>
+      <h2>${esc(post.title)}</h2><p>${esc(post.excerpt || "Read the latest from The Flight Log.")}</p>
+      <div class="meta">${esc(dateFmt(post.published_at || post.created_at))} · INCOR DISCS</div>
+      <button class="read" data-id="${esc(post.id)}">Read the story ↗</button></div>`;
+  }
+
+  function render() {
+    const q = search.value.trim().toLowerCase();
+    const visible = posts.filter(post =>
+      (activeCategory === "all" || post.category === activeCategory) &&
+      (!q || [post.title,post.excerpt,post.content,post.category]
+        .some(value => String(value || "").toLowerCase().includes(q)))
+    );
+    document.getElementById("postCount").textContent =
+      `${visible.length} ${visible.length === 1 ? "story" : "stories"}`;
+    grid.innerHTML = visible.length
+      ? visible.map(card).join("")
+      : `<div class="empty">No stories match that search. Try another phrase or category.</div>`;
+  }
+
+  async function loadPosts(
+const {data,error}=await db.from("posts")
+  .select("id,title,slug,category,excerpt,content,cover_image_path,cover_alt,status,created_at,updated_at,post_images(id,storage_path,alt_text,sort_order)")
+  .order("updated_at",{ascending:false});
+) {
+    if (!db) {
+      renderFeatured(null);
+      document.getElementById("postCount").textContent = "Awaiting setup";
+      grid.innerHTML = `<div class="empty">The Flight Log design is ready. Add your Supabase URL and public key to <strong>config.js</strong>, then run <strong>supabase-setup.sql</strong>.</div>`;
+      return;
+    }
+    const {data,error} = await db.from("posts")
+      .select("id,title,slug,category,excerpt,content,cover_image_path,cover_alt,published_at,created_at,post_images(id,storage_path,alt_text,sort_order)")
+      .eq("status","published").order("published_at",{ascending:false,nullsFirst:false});
+    if (error) {
+      status.textContent = "Could not load stories. Check your Supabase setup and read policies.";
+      grid.innerHTML = `<div class="empty">Stories could not be loaded. Please check back soon.</div>`;
+      return;
+    }
+    posts = (data || []).map(post => ({
+      ...post,
+      post_images:(post.post_images || []).sort((a,b)=>(a.sort_order||0)-(b.sort_order||0))
+    }));
+    renderFeatured(posts[0]);
+    document.getElementById("featuredDate").textContent =
+      posts[0] ? dateFmt(posts[0].published_at || posts[0].created_at) : "Fresh off the course";
+    render();
+  }
+
+  function openArticle(id) {
+    const post = posts.find(item => String(item.id) === String(id));
+    if (!post) return;
+    document.getElementById("modalCategory").textContent = categoryLabel(post.category);
+    document.getElementById("modalTitle").textContent = post.title;
+    document.getElementById("modalMeta").textContent =
+      `${dateFmt(post.published_at || post.created_at)} · INCOR DISCS`;
+    document.getElementById("modalCopy").textContent = post.content || post.excerpt || "";
+    const photos = (post.post_images || []).map(item => ({
+      url:imageUrl(item.storage_path), alt:item.alt_text || post.title
+    }));
+    if (post.cover_image_path) photos.unshift({
+      url:imageUrl(post.cover_image_path), alt:post.cover_alt || post.title
+    });
+    document.getElementById("modalGallery").innerHTML = photos.map(photo =>
+      `<img src="${esc(photo.url)}" alt="${esc(photo.alt)}" loading="lazy">`
+    ).join("");
+    document.getElementById("articleModal").classList.add("open");
+    document.body.style.overflow = "hidden";
+    document.getElementById("closeModal").focus();
+  }
+
+  function closeArticle() {
+    document.getElementById("articleModal").classList.remove("open");
+    document.body.style.overflow = "";
+  }
+
+  filters.addEventListener("click", event => {
+    const button = event.target.closest("[data-category]");
+    if (!button) return;
+    activeCategory = button.dataset.category;
+    filters.querySelectorAll(".filter").forEach(item =>
+      item.classList.toggle("active", item === button));
+    render();
+  });
+  search.addEventListener("input",render);
+  grid.addEventListener("click",event => {
+    const item = event.target.closest("[data-id]");
+    if (item) openArticle(item.dataset.id);
+  });
+  featured.addEventListener("click",event => {
+    const item = event.target.closest("[data-id]");
+    if (item) openArticle(item.dataset.id);
+  });
+  grid.addEventListener("keydown",event => {
+    if ((event.key === "Enter" || event.key === " ") && event.target.matches(".post")) {
+      event.preventDefault(); openArticle(event.target.dataset.id);
+    }
+  });
+  document.getElementById("closeModal").addEventListener("click",closeArticle);
+  document.getElementById("articleModal").addEventListener("click",event => {
+    if (event.target.id === "articleModal") closeArticle();
+  });
+  document.addEventListener("keydown",event => {
+    if (event.key === "Escape") closeArticle();
+  });
+  loadPosts();
+})();
+</script>
+</body>
+</html>
