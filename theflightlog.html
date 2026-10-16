@@ -1,309 +1,41 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>The Flight Log | INCOR DISCS</title>
-<meta name="description" content="Disc golf culture, course spotlights, gear guides, tournaments, and stories from INCOR DISCS.">
-<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Sans:wght@400;500;600;700&family=Permanent+Marker&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="config.js"></script>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Flight Log | INCOR discs</title>
+<meta name="description" content="The Flight Log by INCOR discs. Disc golf culture, course spotlights, gear guides, tournaments, and stories from the community.">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Sans:wght@400;500;600;700;800&family=Permanent+Marker&display=swap" rel="stylesheet">
 <style>
-:root{--black:#080808;--panel:#121212;--paper:#f4f0e7;--lime:#d4ff00;--purple:#a879ff;--orange:#ff6537;--blue:#67d7ff;--line:#343434;--muted:#aaa69c}
-*{box-sizing:border-box}
-body{margin:0;background:var(--black);color:var(--paper);font-family:'DM Sans',sans-serif}
-a{color:inherit;text-decoration:none}
-.wrap{width:min(1180px,92%);margin:auto}
-.ticker{background:var(--lime);color:#080808;overflow:hidden;white-space:nowrap;padding:10px 0;font-size:.72rem;font-weight:900;letter-spacing:.13em}
-.ticker span{display:inline-block;padding-left:100%;animation:slide 26s linear infinite}
-@keyframes slide{to{transform:translateX(-100%)}}
-header{position:sticky;top:0;z-index:10;background:#080808ed;border-bottom:1px solid var(--line);backdrop-filter:blur(10px)}
-.nav{min-height:78px;display:flex;align-items:center;justify-content:space-between;gap:20px}
-.brand{font-family:'Archivo Black',sans-serif;font-size:1.25rem;line-height:.95}
-.brand span{display:block;color:var(--lime);font-family:'Permanent Marker',cursive;font-size:.8rem;margin-top:7px}
-.links{display:flex;align-items:center;gap:20px;font-size:.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em}
-.links a:hover{color:var(--lime)}
-.admin{border:1px solid var(--lime);color:var(--lime);padding:10px 12px}
-.hero{padding:70px 0 38px}
-.eyebrow{color:var(--lime);font-size:.75rem;font-weight:900;text-transform:uppercase;letter-spacing:.16em}
-.hero h1{font-family:'Archivo Black',sans-serif;text-transform:uppercase;font-size:clamp(3.5rem,10vw,8.5rem);line-height:.83;letter-spacing:-.075em;margin:22px 0}
-.hero h1 em{font-family:'Permanent Marker',cursive;color:var(--orange);font-style:normal;letter-spacing:-.04em}
-.intro{display:flex;justify-content:space-between;align-items:end;gap:25px;margin-top:34px}
-.intro p{max-width:520px;color:#c4c0b7;line-height:1.75;margin:0}
-.scribble{font-family:'Permanent Marker',cursive;color:var(--purple);font-size:1.5rem;transform:rotate(-6deg)}
-.section-head{display:flex;justify-content:space-between;align-items:end;gap:16px;border-bottom:1px solid var(--line);padding-bottom:14px;margin:35px 0 22px}
-.section-head h2{font-family:'Archivo Black',sans-serif;text-transform:uppercase;letter-spacing:-.04em;font-size:1.55rem;margin:0}
-.section-head small{color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
-.featured{display:grid;grid-template-columns:1.1fr .9fr;background:var(--lime);color:#080808;margin-bottom:48px;min-height:350px}
-.feature-art{min-height:320px;background:radial-gradient(circle at 70% 25%,#ff6537 0 8%,transparent 8.5%),radial-gradient(circle at 25% 78%,#a879ff 0 13%,transparent 13.5%),linear-gradient(135deg,#101010 0 45%,#252525 45% 50%,#101010 50%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;padding:24px}
-.feature-art img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.stamp{font-family:'Archivo Black',sans-serif;color:var(--lime);font-size:clamp(3rem,7vw,6.5rem);line-height:.8;text-align:center;text-shadow:5px 5px 0 var(--orange),10px 10px 0 var(--purple);transform:rotate(-7deg);z-index:1}
-.feature-copy{padding:clamp(24px,4vw,50px);display:flex;flex-direction:column;align-items:flex-start;justify-content:center}
-.tag{display:inline-block;border:1px solid currentColor;padding:7px 9px;font-size:.67rem;font-weight:900;text-transform:uppercase;letter-spacing:.1em}
-.feature-copy h2{font-family:'Archivo Black',sans-serif;text-transform:uppercase;font-size:clamp(1.8rem,3.6vw,3.3rem);line-height:.98;letter-spacing:-.055em;margin:18px 0}
-.feature-copy p{line-height:1.7}
-.meta{font-size:.73rem;text-transform:uppercase;letter-spacing:.1em;opacity:.75}
-.read{margin-top:15px;padding:0 0 5px;border:0;border-bottom:3px solid currentColor;background:none;color:inherit;font-weight:900;text-transform:uppercase;cursor:pointer}
-.tools{display:flex;flex-wrap:wrap;gap:12px;margin:18px 0 25px}
-.search{flex:1;min-width:220px;background:#111;color:var(--paper);border:1px solid var(--line);padding:14px}
-.search:focus{outline:1px solid var(--lime)}
-.filters{display:flex;flex-wrap:wrap;gap:8px}
-.filter{background:transparent;color:var(--paper);border:1px solid #444;padding:10px 13px;font-size:.7rem;font-weight:900;text-transform:uppercase;cursor:pointer}
-.filter.active,.filter:hover{background:var(--lime);border-color:var(--lime);color:#080808}
-.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-bottom:70px}
-.post{background:var(--panel);border:1px solid #292929;cursor:pointer;display:flex;flex-direction:column;transition:transform .2s,border-color .2s;min-width:0}
-.post:hover{transform:translateY(-4px);border-color:var(--lime)}
-.post-image{height:205px;background:linear-gradient(135deg,#202020,#0c0c0c);display:flex;align-items:center;justify-content:center;overflow:hidden}
-.post-image img{width:100%;height:100%;object-fit:cover}
-.artword{font-family:'Archivo Black',sans-serif;font-size:3rem;color:var(--lime);transform:rotate(-8deg);text-shadow:4px 4px var(--purple)}
-.post-body{padding:22px;display:flex;flex-direction:column;flex:1}
-.post-body .tag{color:var(--blue);align-self:flex-start;margin-bottom:13px}
-.post-body h3{font-family:'Archivo Black',sans-serif;text-transform:uppercase;font-size:1.4rem;line-height:1.05;letter-spacing:-.04em;margin:0 0 12px}
-.post-body p{color:#bdb9b0;font-size:.9rem;line-height:1.65;margin:0 0 20px}
-.post-bottom{margin-top:auto;display:flex;justify-content:space-between;gap:10px;color:var(--muted);font-size:.68rem;text-transform:uppercase;letter-spacing:.06em}
-.empty{grid-column:1/-1;padding:42px 20px;border:1px dashed #444;color:var(--muted);text-align:center;line-height:1.7}
-.about{background:#171717;border-block:1px solid var(--line);padding:45px 0}
-.about-inner{display:flex;justify-content:space-between;align-items:center;gap:25px}
-.about h2{font-family:'Archivo Black',sans-serif;text-transform:uppercase;font-size:clamp(1.8rem,4vw,3.2rem);line-height:.95;margin:0}
-.about h2 span{color:var(--purple)}
-.about p{max-width:360px;color:#c4c0b7;line-height:1.7}
-footer{padding:28px 0;color:var(--muted);font-size:.78rem}
-.footer-inner{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap}
-footer strong{font-family:'Archivo Black',sans-serif;color:var(--paper)}
-.modal{display:none;position:fixed;inset:0;z-index:30;overflow:auto;background:#000e;padding:25px 14px}
-.modal.open{display:block}
-.modal-panel{position:relative;max-width:850px;margin:25px auto;background:var(--paper);color:#111;padding:clamp(22px,5vw,58px)}
-.close{position:absolute;right:12px;top:12px;background:#111;color:white;border:0;width:42px;height:42px;font-size:1.4rem;cursor:pointer}
-.modal h2{font-family:'Archivo Black',sans-serif;text-transform:uppercase;font-size:clamp(2.1rem,6vw,4.5rem);line-height:.92;letter-spacing:-.06em;margin:18px 0}
-.modal-meta{font-size:.73rem;text-transform:uppercase;letter-spacing:.1em;color:#555;margin-bottom:24px}
-.article-copy{font-size:1.04rem;line-height:1.85;white-space:pre-wrap;overflow-wrap:anywhere}
-.gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:28px}
-.gallery img{width:100%;display:block;max-height:560px;object-fit:cover;background:#ddd}
-.status{color:var(--muted);font-size:.9rem;margin:12px 0 30px}
-@media(max-width:800px){.links{gap:10px}.links a:not(.admin){display:none}.featured{grid-template-columns:1fr}.feature-art{min-height:240px}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.intro,.about-inner{align-items:flex-start;flex-direction:column}.scribble{align-self:flex-end}}
-@media(max-width:520px){.hero{padding-top:48px}.grid{grid-template-columns:1fr}.post-image{height:230px}.section-head{align-items:flex-start;flex-direction:column}.gallery{grid-template-columns:1fr}}
+:root{--black:#101010;--dark:#191919;--white:#f4f1e9;--lime:#c7ff35;--purple:#b28aff;--orange:#ff743d;--blue:#48baff;--yellow:#ffe04b;--border:#444}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--black);color:var(--white);font-family:'DM Sans',sans-serif;overflow-x:hidden}a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:pointer}::selection{background:var(--lime);color:#000}body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:20;opacity:.055;background-image:repeating-linear-gradient(0deg,transparent 0,transparent 3px,#fff 4px)}
+header{padding:22px 6%;display:flex;align-items:center;justify-content:space-between;gap:25px;border-bottom:1px solid var(--border);background:#090909}.brand{display:flex;flex-direction:column;line-height:1}.brand-main{font:clamp(25px,3vw,38px) 'Archivo Black',sans-serif;letter-spacing:-2px;white-space:nowrap}.brand-main .brand-incor{color:var(--white)}.brand-main .brand-discs{color:var(--lime)}.brand-sub{font:13px 'Permanent Marker',cursive;color:var(--lime);margin-top:6px;transform:rotate(-3deg)}nav{display:flex;align-items:center;gap:28px;flex-wrap:wrap}nav a{font-size:12px;font-weight:800;letter-spacing:1px;transition:color .2s}nav a:hover,nav a.active{color:var(--lime)}.shop-btn{background:var(--lime);color:#000;padding:12px 19px;font-weight:800;font-size:11px;letter-spacing:1px}.ticker{background:var(--lime);color:#000;overflow:hidden;white-space:nowrap;padding:11px 0;font:12px 'Archivo Black',sans-serif}.ticker-track{display:inline-block;animation:ticker 30s linear infinite}.ticker-track span{padding-right:24px}@keyframes ticker{to{transform:translateX(-50%)}}
+.hero{min-height:500px;padding:85px 6%;position:relative;overflow:hidden;display:flex;align-items:center;background:radial-gradient(circle at 80% 40%,#33421d,transparent 45%),radial-gradient(circle at 20% 80%,#302044,transparent 40%),#101010;border-bottom:1px solid var(--border)}.hero-content{position:relative;z-index:2}.eyebrow{font-size:11px;font-weight:800;letter-spacing:3px;color:var(--lime)}.hero h1{font:clamp(70px,12vw,160px)/.88 'Archivo Black',sans-serif;letter-spacing:-7px;margin:30px 0 22px}.hero h1 span{font-family:'Permanent Marker',cursive;color:var(--lime)}.hero p{max-width:540px;font-size:16px;line-height:1.8;color:#ccc}.hero-graffiti{position:absolute;right:7%;top:15%;font:clamp(100px,19vw,270px) 'Permanent Marker',cursive;color:var(--purple);opacity:.17;transform:rotate(-20deg);pointer-events:none}.hero-sticker{position:absolute;right:10%;bottom:50px;width:140px;height:140px;border-radius:50%;background:var(--orange);color:#000;display:flex;align-items:center;justify-content:center;text-align:center;font:22px/1.1 'Permanent Marker',cursive;transform:rotate(13deg);box-shadow:7px 7px 0 #000}.hero-scribble{font:22px 'Permanent Marker',cursive;color:var(--purple);margin-top:25px;transform:rotate(-3deg)}
+.container{max-width:1450px;margin:auto;padding:75px 6%}.section-head{display:flex;justify-content:space-between;align-items:end;flex-wrap:wrap;gap:20px;margin-bottom:35px}.section-head h2{font:clamp(34px,5vw,62px) 'Archivo Black',sans-serif;letter-spacing:-2px;margin:0}.marker-note{font:20px 'Permanent Marker',cursive;color:var(--orange);transform:rotate(-5deg)}.highlight{color:var(--lime)}.featured{display:grid;grid-template-columns:1.15fr 1fr;border:1px solid var(--border);margin-bottom:95px;background:#151515}.feature-art{min-height:390px;position:relative;overflow:hidden;background:repeating-linear-gradient(35deg,transparent 0 24px,#ffffff12 25px 27px),radial-gradient(circle at 30% 30%,#91b62b,transparent 45%),#263716;display:flex;align-items:center;justify-content:center}.feature-art img{width:100%;height:100%;position:absolute;inset:0;object-fit:cover}.disc-graphic{width:260px;height:260px;border-radius:50%;background:var(--lime);border:15px solid #101010;box-shadow:0 0 0 8px var(--lime),14px 17px 0 #0009;display:flex;align-items:center;justify-content:center;transform:rotate(-17deg);text-align:center;position:relative;z-index:1}.disc-graphic span{font:38px/1 'Permanent Marker',cursive;color:#000}.feature-content{padding:clamp(30px,5vw,60px);display:flex;flex-direction:column;justify-content:center}.tag{display:inline-block;width:fit-content;padding:7px 11px;background:var(--lime);color:#000;font-size:10px;font-weight:800;letter-spacing:1px;text-transform:uppercase}.feature-content h3{font:clamp(29px,3.5vw,46px)/1.12 'Archivo Black',sans-serif;letter-spacing:-1.5px;margin:23px 0}.meta{font-size:10px;font-weight:800;letter-spacing:1.4px;color:#999;text-transform:uppercase}.feature-content p{color:#bbb;line-height:1.8;font-size:14px}.read{display:inline-block;border:none;background:none;color:var(--lime);padding:0;margin-top:25px;font-size:12px;font-weight:800;letter-spacing:1px;text-align:left}.read:hover{color:var(--orange)}.filters{display:flex;gap:11px;flex-wrap:wrap;margin-bottom:30px}.filter{border:1px solid #555;background:transparent;color:#fff;padding:13px 17px;font-size:11px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;transition:.2s}.filter:hover,.filter.active{background:var(--lime);border-color:var(--lime);color:#000;transform:rotate(-2deg)}.search{width:100%;background:#1c1c1c;border:1px solid var(--border);padding:17px;color:#fff;margin-bottom:35px;outline:none}.search:focus{border-color:var(--lime)}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}.post{background:#181818;border:1px solid var(--border);transition:.25s;display:flex;flex-direction:column;min-width:0}.post:hover{transform:translateY(-6px);border-color:var(--lime)}.post-art{height:225px;overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center;background:repeating-linear-gradient(120deg,#ffffff12 0 3px,transparent 4px 30px),#397765}.post-art img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}.post-art span{font:clamp(32px,4vw,55px)/1 'Permanent Marker',cursive;text-align:center;color:#fff;text-shadow:5px 5px #111;transform:rotate(-9deg);padding:20px;position:relative;z-index:1}.art-courses{background:repeating-linear-gradient(120deg,#ffffff12 0 3px,transparent 4px 30px),#397765}.art-gear{background:radial-gradient(circle at 50% 50%,#ffe04b 0 20%,transparent 21%),#7852b0}.art-tournaments{background:repeating-linear-gradient(-30deg,#0002 0 8px,transparent 9px 35px),#d86b35}.art-culture{background:radial-gradient(circle at 70% 30%,#ff743d,transparent 40%),#315d9a}.art-news{background:repeating-linear-gradient(40deg,transparent 0 20px,#ffffff12 21px 23px),#547c29}.art-tips{background:radial-gradient(circle at 30% 40%,#c7ff35,transparent 35%),#704c85}.post-body{padding:26px;flex:1;display:flex;flex-direction:column;align-items:flex-start}.post-body h3{font:22px/1.25 'Archivo Black',sans-serif;letter-spacing:-.5px;margin:20px 0 13px}.post-body p{font-size:13px;line-height:1.8;color:#aaa}.post-body .read{margin-top:auto;padding-top:20px}.post:nth-child(2n) .tag{background:var(--purple)}.post:nth-child(3n) .tag{background:var(--orange)}#empty,#loadMessage{padding:25px 0;font:22px 'Permanent Marker',cursive;color:var(--purple)}#empty{display:none}.statement{margin-top:95px;padding:65px 30px;background:var(--lime);color:#000;text-align:center;transform:skewY(-2deg)}.statement-inner{transform:skewY(2deg)}.statement h2{font:clamp(38px,7vw,85px)/1 'Archivo Black',sans-serif;letter-spacing:-3px;margin:0}.statement p{font:23px 'Permanent Marker',cursive;margin-bottom:0}footer{background:#090909;padding:90px 6% 25px;margin-top:70px;border-top:1px solid var(--border)}.footer-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:50px}.footer-logo{font:clamp(40px,6vw,70px) 'Archivo Black',sans-serif;letter-spacing:-4px;line-height:1}.footer-logo .brand-discs{color:var(--lime)}.footer-slogan{font:23px 'Permanent Marker',cursive;color:var(--lime);margin-top:18px}footer p{font-size:13px;color:#999;line-height:1.8}.footer-links{display:flex;flex-direction:column;gap:14px;font-size:12px;font-weight:800;letter-spacing:1px}.footer-links a:hover{color:var(--lime)}.copyright{margin-top:70px;padding-top:22px;border-top:1px solid #333;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;font-size:10px;color:#777;letter-spacing:1px}
+.modal{display:none;position:fixed;inset:0;background:#000e;z-index:100;overflow-y:auto;padding:30px 15px}.modal.open{display:block}.modal-inner{max-width:900px;margin:auto;padding:clamp(25px,5vw,65px);background:#171717;border:1px solid var(--lime)}.close{float:right;background:var(--lime);color:#000;border:none;padding:11px 16px;font-size:11px;font-weight:800}.modal h2{font:clamp(30px,5vw,55px)/1.1 'Archivo Black',sans-serif;margin:35px 0 20px}.modal-copy{color:#ccc;font-size:16px;line-height:1.9}.modal-copy p{margin:22px 0}.article-gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:25px 0}.article-gallery figure{margin:0}.article-gallery img{display:block;width:100%;max-height:440px;object-fit:contain;background:#090909;border:1px solid #333}.article-gallery figcaption{font-size:11px;color:#aaa;padding-top:7px}.cover-hidden{display:none!important}.status-note{font-size:12px;color:#999;line-height:1.6}.error-note{color:var(--orange)}
+@media(max-width:950px){.featured{grid-template-columns:1fr}.grid{grid-template-columns:repeat(2,1fr)}.hero-sticker{opacity:.5}}@media(max-width:650px){header{flex-direction:column}nav{justify-content:center;gap:16px}.hero{min-height:410px;padding:65px 6%}.hero h1{font-size:clamp(55px,13vw,85px);letter-spacing:-4px}.hero-sticker{width:90px;height:90px;font-size:15px;right:5%;bottom:20px}.grid{grid-template-columns:1fr}.feature-content{padding:28px}.disc-graphic{width:200px;height:200px}.footer-grid{grid-template-columns:1fr}.article-gallery{grid-template-columns:1fr}}@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
 </style>
-</head>
-<body>
-<div class="ticker"><span>INCOR DISCS • THROW YOUR OWN LINE • COURSE CULTURE • GEAR THAT FLIES • GOOD PEOPLE / GOOD ROUNDS • INCOR DISCS • </span></div>
-<header><div class="wrap nav">
-<a class="brand" href="index.html">INCOR DISCS<span>THE FLIGHT LOG ↗</span></a>
-<nav class="links" aria-label="Main navigation">
-<a href="index.html">Home</a><a href="shop.html">Shop</a><a href="about.html">About</a><a href="contact.html">Contact</a><a class="admin" href="admin.html">Writer Login ↗</a>
-</nav></div></header>
-
-<main class="wrap">
-<section class="hero">
-<div class="eyebrow">Field notes • Flight paths • Disc golf culture</div>
-<h1>Life's better<br>in <em>flight.</em></h1>
-<div class="intro"><p>The stories behind the throws. Course discoveries, gear talk, tournament weekends, everyday rounds, and whatever else finds its way into our orbit.</p><div class="scribble">Keep it in the fairway-ish!</div></div>
-</section>
-
-<section>
-<div class="section-head"><h2>On the radar</h2><small>Featured story · <span id="featuredDate">Fresh off the course</span></small></div>
-<div id="featured" class="featured">
-<div class="feature-art"><div class="stamp">FLIGHT<br>LOG</div></div>
-<div class="feature-copy"><span class="tag">The Flight Log</span><h2>Good things are in the air.</h2><p>Course notes, disc talk, and field reports from the INCOR crew are on the way.</p></div>
-</div>
-</section>
-
-<section id="stories">
-<div class="section-head"><h2>Latest transmissions</h2><small id="postCount">Loading stories…</small></div>
-<div class="tools">
-<input class="search" id="searchInput" type="search" placeholder="Search stories, courses, gear…" aria-label="Search stories">
-<div class="filters" id="filters">
-<button class="filter active" data-category="all">All stories</button>
-<button class="filter" data-category="courses">Courses</button>
-<button class="filter" data-category="gear">Gear</button>
-<button class="filter" data-category="tournaments">Tournaments</button>
-<button class="filter" data-category="culture">Culture</button>
-<button class="filter" data-category="news">News</button>
-</div></div>
-<div id="postGrid" class="grid"><div class="empty">Connecting to The Flight Log…</div></div>
-<div id="loadStatus" class="status" role="status" aria-live="polite"></div>
-</section>
-</main>
-
-<section class="about"><div class="wrap about-inner">
-<h2>Not just a game.<br><span>A whole way to fly.</span></h2>
-<p>The Flight Log is the living notebook of INCOR DISCS — written from the course, for the community. Have a story idea? Get in touch and let's talk.</p>
-</div></section>
-<footer><div class="wrap footer-inner"><div><strong>INCOR DISCS</strong> · The Flight Log</div><div>Throw your own line. © <span id="year"></span> INCOR DISCS</div></div></footer>
-
-<div class="modal" id="articleModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-<article class="modal-panel">
-<button class="close" id="closeModal" aria-label="Close article">×</button>
-<span class="tag" id="modalCategory">STORY</span><h2 id="modalTitle"></h2>
-<div class="modal-meta" id="modalMeta"></div>
-<div class="article-copy" id="modalCopy"></div>
-<div class="gallery" id="modalGallery"></div>
-</article></div>
-
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="config.js"></script>
+</head><body>
+<header><a href="index.html" class="brand"><span class="brand-main"><span class="brand-incor">INCOR</span> <span class="brand-discs">discs.</span></span><span class="brand-sub">THROW DIFFERENT.</span></a><nav><a href="index.html">HOME</a><a href="shop.html">SHOP</a><a href="about.html">ABOUT</a><a href="blog.html" class="active">THE FLIGHT LOG</a><a href="contact.html">CONTACT</a><a href="shop.html" class="shop-btn">SHOP DISCS ↗</a></nav></header>
+<div class="ticker" aria-hidden="true"><div class="ticker-track"><span>THROW DIFFERENT ✳ STAY DIFFERENT ✳ GOOD PEOPLE. GREAT FLIGHTS. ✳ SUPPORT YOUR LOCAL COURSE ✳ INCOR discs ✳</span><span>THROW DIFFERENT ✳ STAY DIFFERENT ✳ GOOD PEOPLE. GREAT FLIGHTS. ✳ SUPPORT YOUR LOCAL COURSE ✳ INCOR discs ✳</span></div></div>
+<section class="hero"><div class="hero-content"><div class="eyebrow">INCOR discs / THE OFFICIAL BLOG / EST. 2026</div><h1>THE<br><span>FLIGHT LOG.</span></h1><p>Disc golf. People. Places. Progress. Stories from the fairway, gear worth throwing, courses worth finding, and a culture that's about a whole lot more than plastic.</p><div class="hero-scribble">Grip it. Rip it. Read about it. ↗</div></div><div class="hero-graffiti" aria-hidden="true">✳</div><div class="hero-sticker" aria-hidden="true">EAT.<br>SLEEP.<br>THROW.</div></section>
+<main class="container"><section id="featured"><div class="section-head"><h2>FRONT PAGE<span class="highlight">.</span></h2><span class="marker-note">The big story →</span></div><div class="featured" id="featuredCard"><div class="feature-art"><div class="disc-graphic"><span>MORE<br>THAN A<br>GAME.</span></div></div><div class="feature-content"><span class="tag">Featured / Community</span><h3>THE NEXT STORY STARTS HERE.</h3><div class="meta">INCOR discs / THE FLIGHT LOG</div><p>Stories from the fairway, gear worth throwing, courses worth finding, and the people who make this sport special.</p><p class="status-note" id="featuredMessage">Fresh stories are posted here as they are published.</p></div></div></section>
+<section id="articles"><div class="section-head"><h2>THE ARCHIVE<span style="color:var(--orange)">.</span></h2><span class="marker-note">Find your line.</span></div><div class="filters"><button class="filter active" data-filter="all">✳ ALL POSTS</button><button class="filter" data-filter="courses">COURSE SPOTLIGHTS</button><button class="filter" data-filter="gear">GEAR & FLIGHT SCHOOL</button><button class="filter" data-filter="tournaments">TOURNAMENT SCENE</button><button class="filter" data-filter="culture">THE CULTURE</button><button class="filter" data-filter="news">INSIDE INCOR</button></div><input type="search" class="search" id="search" placeholder="SEARCH THE FLIGHT LOG..." aria-label="Search blog articles"><p id="loadMessage" class="status-note">Loading the latest stories…</p><div class="grid" id="postGrid"></div><p id="empty">NOTHING ON THIS FAIRWAY. TRY ANOTHER SEARCH. ↗</p></section></main>
+<section class="statement"><div class="statement-inner"><h2>LESS TALK.<br>MORE THROW.</h2><p>GOOD PEOPLE. GREAT FLIGHTS. ZERO PRETENSE.</p></div></section>
+<footer id="footer"><div class="footer-grid"><div><div class="footer-logo"><span>INCOR</span> <span class="brand-discs">discs.</span></div><div class="footer-slogan">THROW DIFFERENT. STAY DIFFERENT.</div><p>Disc golf gear, culture, community,<br>and everything in between.</p></div><div class="footer-links"><span style="color:var(--lime)">KEEP EXPLORING ↗</span><a href="index.html">HOME</a><a href="shop.html">SHOP DISCS</a><a href="#featured">FEATURED STORY</a><a href="#articles">THE ARCHIVE</a><a href="contact.html">CONTACT</a></div></div><div class="copyright"><span>© 2026 INCOR discs. ALL RIGHTS RESERVED.</span><span>BUILT FOR THE FLIGHT. ✳</span></div></footer>
+<div class="modal" id="articleModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modal-inner"><button class="close" id="closeArticle">✕ CLOSE</button><div style="clear:both"></div><div class="eyebrow" id="modalCategory"></div><h2 id="modalTitle"></h2><div class="meta" id="modalMeta"></div><div class="article-gallery" id="modalGallery"></div><div class="modal-copy" id="modalCopy"></div><button class="read" id="backToLog">← BACK TO THE FLIGHT LOG</button></div></div>
 <script>
-(() => {
-  const cfg = window.FLIGHT_LOG_CONFIG || {};
-  const configured = cfg.SUPABASE_URL && cfg.SUPABASE_ANON_KEY &&
-    !cfg.SUPABASE_URL.includes("YOUR-PROJECT") &&
-    !cfg.SUPABASE_ANON_KEY.includes("YOUR_SUPABASE");
-  const db = configured && window.supabase
-    ? window.supabase.createClient(cfg.SUPABASE_URL, cfg.SUPABASE_ANON_KEY)
-    : null;
-  const grid = document.getElementById("postGrid");
-  const featured = document.getElementById("featured");
-  const search = document.getElementById("searchInput");
-  const filters = document.getElementById("filters");
-  const status = document.getElementById("loadStatus");
-  let posts = [], activeCategory = "all";
-  document.getElementById("year").textContent = new Date().getFullYear();
-
-  const esc = value => String(value ?? "").replace(/[&<>"']/g, c => ({
-    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
-  }[c]));
-  const dateFmt = value => value ? new Date(value).toLocaleDateString(undefined,
-    {year:"numeric",month:"short",day:"numeric"}) : "Recently";
-  const categoryLabel = value => ({
-    courses:"Course notes",gear:"Gear",tournaments:"Tournaments",
-    culture:"Culture",news:"News"
-  })[value] || "The Flight Log";
-
-  function imageUrl(path) {
-    if (!path) return "";
-    if (/^https?:\/\//i.test(path)) return path;
-    return db.storage.from("flight-log").getPublicUrl(path).data.publicUrl;
-  }
-
-  function card(post, index) {
-    const cover = imageUrl(post.cover_image_path);
-    const words = ["FLY.","CHAIN!","LOCAL.","SEND IT.","AIR TIME."];
-    return `<article class="post" tabindex="0" role="button" aria-label="Read ${esc(post.title)}" data-id="${esc(post.id)}">
-      <div class="post-image">${cover
-        ? `<img src="${esc(cover)}" alt="${esc(post.cover_alt || post.title)}" loading="lazy">`
-        : `<span class="artword">${words[index % words.length]}</span>`}</div>
-      <div class="post-body"><span class="tag">${esc(categoryLabel(post.category))}</span>
-      <h3>${esc(post.title)}</h3><p>${esc(post.excerpt || "Read this story from The Flight Log.")}</p>
-      <div class="post-bottom"><span>${esc(dateFmt(post.published_at || post.created_at))}</span><span>Read story ↗</span></div></div>
-    </article>`;
-  }
-
-  function renderFeatured(post) {
-    if (!post) {
-      featured.innerHTML = `<div class="feature-art"><div class="stamp">FLIGHT<br>LOG</div></div>
-      <div class="feature-copy"><span class="tag">The Flight Log</span><h2>Good things are in the air.</h2>
-      <p>Course notes, disc talk, and field reports from the INCOR crew are on the way.</p></div>`;
-      return;
-    }
-    const cover = imageUrl(post.cover_image_path);
-    featured.innerHTML = `<div class="feature-art">${cover
-      ? `<img src="${esc(cover)}" alt="${esc(post.cover_alt || post.title)}">`
-      : `<div class="stamp">FEATURED<br>FLIGHT</div>`}</div>
-      <div class="feature-copy"><span class="tag">${esc(categoryLabel(post.category))} · Featured</span>
-      <h2>${esc(post.title)}</h2><p>${esc(post.excerpt || "Read the latest from The Flight Log.")}</p>
-      <div class="meta">${esc(dateFmt(post.published_at || post.created_at))} · INCOR DISCS</div>
-      <button class="read" data-id="${esc(post.id)}">Read the story ↗</button></div>`;
-  }
-
-  function render() {
-    const q = search.value.trim().toLowerCase();
-    const visible = posts.filter(post =>
-      (activeCategory === "all" || post.category === activeCategory) &&
-      (!q || [post.title,post.excerpt,post.content,post.category]
-        .some(value => String(value || "").toLowerCase().includes(q)))
-    );
-    document.getElementById("postCount").textContent =
-      `${visible.length} ${visible.length === 1 ? "story" : "stories"}`;
-    grid.innerHTML = visible.length
-      ? visible.map(card).join("")
-      : `<div class="empty">No stories match that search. Try another phrase or category.</div>`;
-  }
-
-  async function loadPosts(
-const {data,error}=await db.from("posts")
-  .select("id,title,slug,category,excerpt,content,cover_image_path,cover_alt,status,created_at,updated_at,post_images(id,storage_path,alt_text,sort_order)")
-  .order("updated_at",{ascending:false});
-) {
-    if (!db) {
-      renderFeatured(null);
-      document.getElementById("postCount").textContent = "Awaiting setup";
-      grid.innerHTML = `<div class="empty">The Flight Log design is ready. Add your Supabase URL and public key to <strong>config.js</strong>, then run <strong>supabase-setup.sql</strong>.</div>`;
-      return;
-    }
-    const {data,error} = await db.from("posts")
-      .select("id,title,slug,category,excerpt,content,cover_image_path,cover_alt,published_at,created_at,post_images(id,storage_path,alt_text,sort_order)")
-      .eq("status","published").order("published_at",{ascending:false,nullsFirst:false});
-    if (error) {
-      status.textContent = "Could not load stories. Check your Supabase setup and read policies.";
-      grid.innerHTML = `<div class="empty">Stories could not be loaded. Please check back soon.</div>`;
-      return;
-    }
-    posts = (data || []).map(post => ({
-      ...post,
-      post_images:(post.post_images || []).sort((a,b)=>(a.sort_order||0)-(b.sort_order||0))
-    }));
-    renderFeatured(posts[0]);
-    document.getElementById("featuredDate").textContent =
-      posts[0] ? dateFmt(posts[0].published_at || posts[0].created_at) : "Fresh off the course";
-    render();
-  }
-
-  function openArticle(id) {
-    const post = posts.find(item => String(item.id) === String(id));
-    if (!post) return;
-    document.getElementById("modalCategory").textContent = categoryLabel(post.category);
-    document.getElementById("modalTitle").textContent = post.title;
-    document.getElementById("modalMeta").textContent =
-      `${dateFmt(post.published_at || post.created_at)} · INCOR DISCS`;
-    document.getElementById("modalCopy").textContent = post.content || post.excerpt || "";
-    const photos = (post.post_images || []).map(item => ({
-      url:imageUrl(item.storage_path), alt:item.alt_text || post.title
-    }));
-    if (post.cover_image_path) photos.unshift({
-      url:imageUrl(post.cover_image_path), alt:post.cover_alt || post.title
-    });
-    document.getElementById("modalGallery").innerHTML = photos.map(photo =>
-      `<img src="${esc(photo.url)}" alt="${esc(photo.alt)}" loading="lazy">`
-    ).join("");
-    document.getElementById("articleModal").classList.add("open");
-    document.body.style.overflow = "hidden";
-    document.getElementById("closeModal").focus();
-  }
-
-  function closeArticle() {
-    document.getElementById("articleModal").classList.remove("open");
-    document.body.style.overflow = "";
-  }
-
-  filters.addEventListener("click", event => {
-    const button = event.target.closest("[data-category]");
-    if (!button) return;
-    activeCategory = button.dataset.category;
-    filters.querySelectorAll(".filter").forEach(item =>
-      item.classList.toggle("active", item === button));
-    render();
-  });
-  search.addEventListener("input",render);
-  grid.addEventListener("click",event => {
-    const item = event.target.closest("[data-id]");
-    if (item) openArticle(item.dataset.id);
-  });
-  featured.addEventListener("click",event => {
-    const item = event.target.closest("[data-id]");
-    if (item) openArticle(item.dataset.id);
-  });
-  grid.addEventListener("keydown",event => {
-    if ((event.key === "Enter" || event.key === " ") && event.target.matches(".post")) {
-      event.preventDefault(); openArticle(event.target.dataset.id);
-    }
-  });
-  document.getElementById("closeModal").addEventListener("click",closeArticle);
-  document.getElementById("articleModal").addEventListener("click",event => {
-    if (event.target.id === "articleModal") closeArticle();
-  });
-  document.addEventListener("keydown",event => {
-    if (event.key === "Escape") closeArticle();
-  });
-  loadPosts();
-})();
-</script>
-</body>
-</html>
+const CATEGORY_LABELS={courses:'COURSE SPOTLIGHTS',gear:'GEAR & FLIGHT SCHOOL',tournaments:'TOURNAMENT SCENE',culture:'THE CULTURE',news:'INSIDE INCOR'};
+const ART_CLASSES={courses:'art-courses',gear:'art-gear',tournaments:'art-tournaments',culture:'art-culture',news:'art-news'};
+const ESC=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const config=window.FLIGHT_LOG_CONFIG||{};let db=null,allPosts=[],activeCategory='all',previousFocus=null;
+if(window.supabase&&config.SUPABASE_URL&&!config.SUPABASE_URL.includes('YOUR-PROJECT-REF')&&config.SUPABASE_ANON_KEY&&!config.SUPABASE_ANON_KEY.includes('YOUR_SUPABASE')) db=window.supabase.createClient(config.SUPABASE_URL,config.SUPABASE_ANON_KEY);
+const grid=document.getElementById('postGrid'),search=document.getElementById('search'),empty=document.getElementById('empty'),loadMessage=document.getElementById('loadMessage');
+function dateLabel(value){if(!value)return 'INCOR discs / THE FLIGHT LOG';const d=new Date(value);return Number.isNaN(d.getTime())?'INCOR discs / THE FLIGHT LOG':d.toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'}).toUpperCase()+' / INCOR discs';}
+function cardMarkup(post,index){const category=post.category||'culture',images=post.post_images||[],cover=post.cover_image_url||'',coverAlt=post.cover_alt||post.title||'Disc golf article photo',art=ART_CLASSES[category]||'art-culture';return `<article class="post" data-category="${ESC(category)}" data-search="${ESC([post.title,post.excerpt,CATEGORY_LABELS[category],post.content].join(' ').toLowerCase())}"><div class="post-art ${art}">${cover?`<img src="${ESC(cover)}" alt="${ESC(coverAlt)}" loading="lazy">`:`<span>${ESC((CATEGORY_LABELS[category]||'THE FLIGHT LOG').replace(' & ',' &<br>'))}</span>`}</div><div class="post-body"><span class="tag">${ESC(CATEGORY_LABELS[category]||category)}</span><h3>${ESC(post.title)}</h3><div class="meta">${dateLabel(post.published_at)}${images.length?` / ${images.length} PHOTO${images.length===1?'':'S'}`:''}</div><p>${ESC(post.excerpt||'A story from the world of disc golf.')}</p><button class="read" data-open-post="${ESC(post.id)}">READ MORE ↗</button></div></article>`;}
+function applyFilters(){const term=search.value.toLowerCase().trim();let count=0;grid.querySelectorAll('.post').forEach(card=>{const category=activeCategory==='all'||card.dataset.category===activeCategory;const words=(card.dataset.search+' '+card.textContent).toLowerCase().includes(term);card.hidden=!(category&&words);card.style.display=card.hidden?'none':'';if(!card.hidden)count++;});empty.style.display=count?'none':'block';}
+function renderPosts(){const filtered=allPosts;grid.innerHTML=filtered.map(cardMarkup).join('');loadMessage.style.display=filtered.length?'none':'block';if(!filtered.length)loadMessage.textContent='NO PUBLISHED STORIES YET. CHECK BACK SOON — THE NEXT FLIGHT IS COMING.';applyFilters();const featured=allPosts.find(p=>p.is_featured)||allPosts[0];if(featured){const holder=document.getElementById('featuredCard'),cat=featured.category||'culture',cover=featured.cover_image_url||'';holder.innerHTML=`<div class="feature-art">${cover?`<img src="${ESC(cover)}" alt="${ESC(featured.cover_alt||featured.title)}">`:`<div class="disc-graphic"><span>MORE<br>THAN A<br>GAME.</span></div>`}</div><div class="feature-content"><span class="tag">Featured / ${ESC(CATEGORY_LABELS[cat]||cat)}</span><h3>${ESC(featured.title)}</h3><div class="meta">${dateLabel(featured.published_at)}</div><p>${ESC(featured.excerpt||'A story from the world of disc golf.')}</p><button class="read" data-open-post="${ESC(featured.id)}">READ THE STORY ↗</button></div>`;document.getElementById('featuredMessage').style.display='none';}}
+async function loadPosts(){if(!db){loadMessage.textContent='SETUP NEEDED: add your Supabase project URL and public anon/publishable key to config.js.';document.getElementById('featuredMessage').textContent='The public blog is styled and ready. Connect Supabase to show stories published through the private dashboard.';return;}try{const {data,error}=await db.from('posts').select('id,title,slug,category,excerpt,content,cover_image_path,cover_alt,published_at,created_at,post_images(id,storage_path,alt_text,sort_order)').eq('status','published').order('published_at',{ascending:false});if(error)throw error;allPosts=(data||[]).map(p=>({...p,cover_image_url:p.cover_image_path?db.storage.from('flight-log').getPublicUrl(p.cover_image_path).data.publicUrl:'',post_images:(p.post_images||[]).sort((a,b)=>(a.sort_order||0)-(b.sort_order||0)).map(im=>({...im,url:db.storage.from('flight-log').getPublicUrl(im.storage_path).data.publicUrl}))}));renderPosts();}catch(err){console.error(err);loadMessage.textContent='WE HIT A SNAG LOADING STORIES. CHECK THE SUPABASE SETUP AND TRY AGAIN.';loadMessage.classList.add('error-note');}}
+document.querySelectorAll('.filter').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('.filter').forEach(b=>b.classList.remove('active'));btn.classList.add('active');activeCategory=btn.dataset.filter;applyFilters();}));search.addEventListener('input',applyFilters);
+const modal=document.getElementById('articleModal');function openArticle(id){const p=allPosts.find(x=>x.id===id);if(!p)return;previousFocus=document.activeElement;document.getElementById('modalCategory').textContent=CATEGORY_LABELS[p.category]||String(p.category||'THE FLIGHT LOG').toUpperCase();document.getElementById('modalTitle').textContent=p.title;document.getElementById('modalMeta').textContent=dateLabel(p.published_at);document.getElementById('modalCopy').textContent='';const body=document.getElementById('modalCopy');String(p.content||'').split(/\n\s*\n/).map(s=>s.trim()).filter(Boolean).forEach(par=>{const el=document.createElement('p');el.textContent=par;body.appendChild(el);});const gallery=document.getElementById('modalGallery');gallery.innerHTML='';(p.post_images||[]).forEach(im=>{const fig=document.createElement('figure'),img=document.createElement('img');img.src=im.url;img.alt=im.alt_text||p.title;img.loading='lazy';fig.appendChild(img);if(im.alt_text){const cap=document.createElement('figcaption');cap.textContent=im.alt_text;fig.appendChild(cap);}gallery.appendChild(fig);});if(p.cover_image_url&&!((p.post_images||[]).some(im=>im.storage_path===p.cover_image_path))){const fig=document.createElement('figure'),img=document.createElement('img');img.src=p.cover_image_url;img.alt=p.cover_alt||p.title;fig.appendChild(img);gallery.prepend(fig);}modal.classList.add('open');modal.scrollTop=0;document.body.style.overflow='hidden';document.getElementById('closeArticle').focus();}
+function closeArticle(){modal.classList.remove('open');document.body.style.overflow='';if(previousFocus)previousFocus.focus();}grid.addEventListener('click',e=>{const btn=e.target.closest('[data-open-post]');if(btn)openArticle(btn.dataset.openPost);});document.getElementById('closeArticle').addEventListener('click',closeArticle);document.getElementById('backToLog').addEventListener('click',closeArticle);modal.addEventListener('click',e=>{if(e.target===modal)closeArticle();});document.addEventListener('keydown',e=>{if(!modal.classList.contains('open'))return;if(e.key==='Escape')closeArticle();if(e.key==='Tab'){const controls=[...modal.querySelectorAll('button,a[href],input,[tabindex]:not([tabindex="-1"])')].filter(el=>!el.disabled);const first=controls[0],last=controls[controls.length-1];if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}}});loadPosts();
+</script></body></html>
