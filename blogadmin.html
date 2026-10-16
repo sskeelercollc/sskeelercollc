@@ -1,0 +1,434 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Writer Dashboard | The Flight Log</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Sans:wght@400;500;600;700&family=Permanent+Marker&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+<style>
+:root{--bg:#080808;--panel:#121212;--paper:#f4f0e7;--lime:#d4ff00;--purple:#a879ff;--orange:#ff6537;--line:#353535;--muted:#aaa69c}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--paper);font-family:'DM Sans',sans-serif}
+a{color:var(--lime);text-decoration:none}
+.wrap{width:min(1120px,94%);margin:auto}
+.top{background:var(--lime);color:#080808;padding:10px 3%;font-size:.72rem;font-weight:900;letter-spacing:.13em;text-transform:uppercase}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:24px 0;border-bottom:1px solid var(--line)}
+.brand{font-family:'Archivo Black',sans-serif;font-size:1.15rem;line-height:.95}
+.brand span{display:block;font-family:'Permanent Marker',cursive;color:var(--lime);font-size:.8rem;margin-top:7px}
+.nav a:last-child{font-size:.8rem;font-weight:800;text-transform:uppercase}
+.hero{padding:42px 0 25px}
+.eyebrow{color:var(--lime);font-size:.74rem;font-weight:900;letter-spacing:.15em;text-transform:uppercase}
+.hero h1{font-family:'Archivo Black',sans-serif;font-size:clamp(2.8rem,7vw,5.5rem);line-height:.9;letter-spacing:-.06em;text-transform:uppercase;margin:14px 0}
+.hero h1 span{color:var(--orange)}
+.hero p{max-width:680px;color:#bdb9b0;line-height:1.7}
+.panel{background:var(--panel);border:1px solid var(--line);padding:clamp(18px,3vw,30px);margin:18px 0 25px}
+.panel h2{font-family:'Archivo Black',sans-serif;text-transform:uppercase;letter-spacing:-.04em;font-size:1.3rem;margin:0 0 18px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.field{display:flex;flex-direction:column;gap:7px;margin-bottom:16px}
+.field label{font-size:.73rem;text-transform:uppercase;letter-spacing:.09em;font-weight:900;color:#d5d0c6}
+.field input:not([type=radio]),.field select,.field textarea{width:100%;background:#090909;border:1px solid #414141;color:var(--paper);padding:13px 14px;font:inherit;border-radius:0}
+.field textarea{min-height:250px;resize:vertical;line-height:1.65}
+.field input:focus,.field select:focus,.field textarea:focus{outline:1px solid var(--lime);border-color:var(--lime)}
+.hint{font-size:.78rem;color:var(--muted);line-height:1.5}
+.buttons{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.btn{background:var(--lime);border:1px solid var(--lime);color:#080808;padding:12px 16px;font-weight:900;text-transform:uppercase;cursor:pointer}
+.btn.secondary{background:transparent;border-color:#555;color:var(--paper)}
+.btn.danger{background:transparent;border-color:#ff8a70;color:#ff8a70}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.hidden{display:none!important}
+.message{padding:12px 0;color:var(--muted);white-space:pre-wrap}
+.message.error{color:#ff8a70}.message.good{color:var(--lime)}
+.postlist{display:grid;gap:10px;margin-top:18px}
+.postrow{display:flex;justify-content:space-between;align-items:center;gap:15px;padding:16px;border:1px solid var(--line);background:#0b0b0b}
+.postrow h3{font-family:'Archivo Black',sans-serif;text-transform:uppercase;font-size:1rem;margin:0 0 6px}
+.postrow p{color:var(--muted);font-size:.77rem;margin:0;overflow-wrap:anywhere}
+.postactions{display:flex;gap:8px;flex-wrap:wrap}
+.pill{display:inline-block;border:1px solid #555;padding:4px 7px;font-size:.64rem;text-transform:uppercase;letter-spacing:.1em;margin-left:5px}
+.pill.live{border-color:var(--lime);color:var(--lime)}
+.preview-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:12px 0}
+.preview{position:relative;min-width:0}
+.preview img{width:100%;height:110px;object-fit:cover;display:block}
+.preview button{position:absolute;right:4px;top:4px;background:#080808;color:white;border:1px solid white;cursor:pointer}
+footer{padding:25px 0;border-top:1px solid var(--line);margin-top:30px;color:var(--muted);font-size:.76rem}
+@media(max-width:700px){.row{grid-template-columns:1fr;gap:0}.postrow{align-items:flex-start;flex-direction:column}.preview-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+</style>
+</head>
+<body>
+<div class="top">INCOR DISCS · PRIVATE WRITER AREA · KEEP IT AUTHENTIC</div>
+<div class="wrap">
+<header class="nav">
+<a class="brand" href="blog.html">INCOR DISCS<span>THE FLIGHT LOG / WRITER DESK</span></a>
+<a href="blog.html">← View public blog</a>
+</header>
+
+<section class="hero">
+<div class="eyebrow">Private publishing dashboard</div>
+<h1>Make a little<br><span>noise.</span></h1>
+<p>Write the story, add your photos, save it as a draft, and publish when you're ready. Drafts stay off the public blog.</p>
+</section>
+
+<section class="panel" id="loginPanel">
+<h2>Writer sign-in</h2>
+<p class="hint">Sign in with a writer account created by you in Supabase. Public account registration should remain disabled.</p>
+<form id="loginForm">
+<div class="row">
+<div class="field"><label for="email">Email</label><input id="email" type="email" autocomplete="username" required></div>
+<div class="field"><label for="password">Password</label><input id="password" type="password" autocomplete="current-password" required></div>
+</div>
+<div class="buttons"><button class="btn" type="submit">Sign in ↗</button></div>
+<div id="loginMessage" class="message" role="status"></div>
+</form>
+</section>
+
+<div id="dashboard" class="hidden">
+<section class="panel">
+<div class="buttons" style="justify-content:space-between">
+<h2 style="margin:0">Your stories</h2>
+<div class="buttons"><button id="newPost" class="btn">＋ New story</button><button id="signOut" class="btn secondary">Sign out</button></div>
+</div>
+<p class="hint">Drafts are private. Publishing makes a story visible on the public blog.</p>
+<div id="postsMessage" class="message" role="status"></div>
+<div id="postList" class="postlist"></div>
+</section>
+
+<section class="panel" id="editorPanel">
+<h2 id="editorHeading">Write a story</h2>
+<form id="postForm">
+<input type="hidden" id="postId">
+
+<div class="field">
+<label for="title">Story title *</label>
+<input id="title" maxlength="180" required placeholder="The round that changed everything">
+</div>
+
+<div class="row">
+<div class="field">
+<label for="category">Category *</label>
+<select id="category" required>
+<option value="culture">Culture</option><option value="courses">Courses</option><option value="gear">Gear</option><option value="tournaments">Tournaments</option><option value="news">News</option>
+</select>
+</div>
+<div class="field">
+<label for="slug">URL slug (optional)</label>
+<input id="slug" maxlength="180" placeholder="the-round-that-changed-everything">
+<div class="hint">A short URL identifier. Leave blank to generate it from the title.</div>
+</div>
+</div>
+
+<div class="field">
+<label for="excerpt">Short intro / excerpt *</label>
+<textarea id="excerpt" required maxlength="420" style="min-height:100px" placeholder="Give readers a reason to open your story."></textarea>
+</div>
+
+<div class="field">
+<label for="content">Story body *</label>
+<textarea id="content" required placeholder="Write your entry here. Plain text and line breaks are supported."></textarea>
+<div class="hint">Article text is displayed as plain text. Arbitrary HTML is not executed.</div>
+</div>
+
+<div class="row">
+<div class="field">
+<label for="coverImage">Cover image</label>
+<input id="coverImage" type="file" accept="image/jpeg,image/png,image/webp,image/gif,image/avif">
+<div class="hint">Optional. Images must be 12 MB or smaller.</div>
+<div id="coverCurrent" class="hint"></div>
+</div>
+<div class="field">
+<label for="coverAlt">Cover image description</label>
+<input id="coverAlt" maxlength="220" placeholder="Players lining up at a tee pad">
+<div class="hint">A short description for accessibility.</div>
+</div>
+</div>
+
+<div class="field">
+<label for="galleryImages">Article photo gallery</label>
+<input id="galleryImages" type="file" accept="image/jpeg,image/png,image/webp,image/gif,image/avif" multiple>
+<div class="hint">Select several photos at once. Existing gallery photos are shown below when editing.</div>
+<div id="galleryPreview" class="preview-grid"></div>
+</div>
+
+<div class="field">
+<label>Publishing status</label>
+<div class="buttons">
+<label><input type="radio" name="status" value="draft" checked> Save as draft</label>
+<label><input type="radio" name="status" value="published"> Publish story</label>
+</div>
+</div>
+
+<div class="buttons">
+<button class="btn" id="saveButton" type="submit">Save story</button>
+<button class="btn secondary" id="resetButton" type="button">Clear form</button>
+</div>
+<div id="editorMessage" class="message" role="status"></div>
+</form>
+</section>
+</div>
+<footer>INCOR DISCS · The Flight Log · Writer dashboard. Keep your login private.</footer>
+</div>
+
+<script>
+(() => {
+  const cfg = window.FLIGHT_LOG_CONFIG || {};
+  const configured = cfg.SUPABASE_URL && cfg.SUPABASE_ANON_KEY &&
+    !cfg.SUPABASE_URL.includes("YOUR-PROJECT") &&
+    !cfg.SUPABASE_ANON_KEY.includes("YOUR_SUPABASE");
+  const db = configured && window.supabase
+    ? window.supabase.createClient(cfg.SUPABASE_URL,cfg.SUPABASE_ANON_KEY)
+    : null;
+
+  const $ = id => document.getElementById(id);
+  let currentUser = null, gallery = [], removedGallery = [], currentCover = null;
+
+  function say(id,message,type="") {
+    $(id).textContent = message;
+    $(id).className = "message " + type;
+  }
+  const esc = value => String(value ?? "").replace(/[&<>"']/g,c=>({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+  }[c]));
+  const slugify = value => value.toLowerCase().normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9]+/g,"-")
+    .replace(/^-|-$/g,"").slice(0,180) || ("story-"+Date.now());
+
+  function imageUrl(path) {
+    if (!path) return "";
+    if (/^https?:\/\//i.test(path)) return path;
+    return db.storage.from("flight-log").getPublicUrl(path).data.publicUrl;
+  }
+
+  function showDashboard(user) {
+    currentUser = user;
+    $("loginPanel").classList.add("hidden");
+    $("dashboard").classList.remove("hidden");
+    loadPosts();
+  }
+
+  async function checkSession() {
+    if (!db) {
+      say("loginMessage","Setup required: add your Supabase URL and public key to config.js, then run supabase-setup.sql.","error");
+      $("loginForm").querySelector("button").disabled = true;
+      return;
+    }
+    const {data,error} = await db.auth.getSession();
+    if (error) say("loginMessage",error.message,"error");
+    else if (data.session) showDashboard(data.session.user);
+  }
+
+  $("loginForm").addEventListener("submit",async event=>{
+    event.preventDefault();
+    if (!db) return;
+    say("loginMessage","Signing in…");
+    const {data,error}=await db.auth.signInWithPassword({
+      email:$("email").value.trim(),password:$("password").value
+    });
+    if(error){say("loginMessage",error.message,"error");return;}
+    say("loginMessage","Signed in.","good");
+    showDashboard(data.user);
+  });
+
+  async function signOut() {
+    if(db) await db.auth.signOut();
+    currentUser=null;
+    $("dashboard").classList.add("hidden");
+    $("loginPanel").classList.remove("hidden");
+    say("loginMessage","You have signed out.");
+  }
+  $("signOut").addEventListener("click",signOut);
+
+  async function loadPosts() {
+    if(!db||!currentUser)return;
+    say("postsMessage","Loading stories…");
+    const {data,error}=await db.from("posts")
+      .select("id,title,slug,category,status,created_at,updated_at,post_images(id,storage_path,alt_text,sort_order)")
+      .order("updated_at",{ascending:false});
+    if(error){say("postsMessage","Could not load stories: "+error.message,"error");return;}
+    const list=data||[];
+    $("postList").dataset.posts=JSON.stringify(list);
+    $("postList").innerHTML=list.length?list.map(post=>`
+      <div class="postrow">
+        <div><h3>${esc(post.title)} <span class="pill ${post.status==="published"?"live":""}">${esc(post.status)}</span></h3>
+        <p>${esc(post.category)} · Updated ${new Date(post.updated_at||post.created_at).toLocaleDateString()} · ${esc(post.slug)}</p></div>
+        <div class="postactions">
+          <button class="btn secondary" data-edit="${esc(post.id)}">Edit</button>
+          <button class="btn secondary" data-toggle="${esc(post.id)}" data-status="${esc(post.status)}">${post.status==="published"?"Unpublish":"Publish"}</button>
+          <button class="btn danger" data-delete="${esc(post.id)}">Delete</button>
+        </div>
+      </div>`).join(""):'<p class="hint">No stories yet. Start your first entry.</p>';
+    say("postsMessage",`${list.length} ${list.length===1?"story":"stories"} total.`);
+  }
+
+  function resetForm() {
+    $("postForm").reset();$("postId").value="";
+    gallery=[];removedGallery=[];currentCover=null;
+    $("coverCurrent").textContent="";$("galleryPreview").innerHTML="";
+    $("editorHeading").textContent="Write a story";
+    $("saveButton").textContent="Save story";
+    say("editorMessage","");
+  }
+
+  function drawGallery() {
+    $("galleryPreview").innerHTML=gallery.map((item,index)=>`
+      <div class="preview"><img src="${esc(imageUrl(item.storage_path))}" alt="${esc(item.alt_text||"Gallery photo")}">
+      <button type="button" data-remove-gallery="${index}" aria-label="Remove photo">×</button></div>`).join("");
+  }
+
+  function editPost(id) {
+    const list=JSON.parse($("postList").dataset.posts||"[]");
+    const post=list.find(item=>String(item.id)===String(id));
+    if(!post)return;
+    $("postId").value=post.id;
+    $("title").value=post.title||"";
+    $("category").value=post.category||"culture";
+    $("slug").value=post.slug||"";
+    $("excerpt").value=post.excerpt||"";
+    $("content").value=post.content||"";
+    $("coverAlt").value=post.cover_alt||"";
+    $("coverCurrent").textContent=post.cover_image_path?"Current cover uploaded. Choose a new file to replace it.":"No cover image.";
+    $("coverImage").value="";$("galleryImages").value="";
+    currentCover=post.cover_image_path||null;
+    gallery=(post.post_images||[]).sort((a,b)=>(a.sort_order||0)-(b.sort_order||0));
+    removedGallery=[];
+    $("postForm").querySelector(`input[name="status"][value="${post.status}"]`).checked=true;
+    $("editorHeading").textContent="Edit story";
+    drawGallery();say("editorMessage","Editing: "+post.title);
+    $("editorPanel").scrollIntoView({behavior:"smooth"});
+  }
+
+  async function uploadFile(file,folder) {
+    if(!file.type.startsWith("image/"))throw new Error("Please select image files only.");
+    if(file.size>12*1024*1024)throw new Error("Each image must be 12 MB or smaller.");
+    const safeName=file.name.toLowerCase().replace(/[^a-z0-9._-]+/g,"-")||"image";
+    const path=`${currentUser.id}/${folder}/${Date.now()}-${crypto.randomUUID()}-${safeName}`;
+    const {error}=await db.storage.from("flight-log").upload(path,file,{
+      cacheControl:"3600",upsert:false,contentType:file.type
+    });
+    if(error)throw error;
+    return path;
+  }
+
+  $("postForm").addEventListener("submit",async event=>{
+    event.preventDefault();
+    if(!db||!currentUser)return;
+    $("saveButton").disabled=true;
+    $("saveButton").textContent="Saving…";
+    say("editorMessage","Saving your story…");
+    try {
+      const title=$("title").value.trim();
+      const publishStatus=document.querySelector('input[name="status"]:checked').value;
+      const payload={
+        title,slug:slugify($("slug").value.trim()||title),
+        category:$("category").value,excerpt:$("excerpt").value.trim(),
+        content:$("content").value,cover_alt:$("coverAlt").value.trim(),
+        status:publishStatus,
+        published_at:publishStatus==="published"?new Date().toISOString():null,
+        updated_at:new Date().toISOString()
+      };
+
+      const coverFile=$("coverImage").files[0];
+      if(coverFile)payload.cover_image_path=await uploadFile(coverFile,"covers");
+
+      let postId=$("postId").value;
+      if(postId) {
+        const {error}=await db.from("posts").update(payload).eq("id",postId);
+        if(error)throw error;
+      } else {
+        payload.created_by=currentUser.id;
+        const {data,error}=await db.from("posts").insert(payload).select("id").single();
+        if(error)throw error;
+        postId=data.id;
+      }
+
+      if(removedGallery.length) {
+        const {error}=await db.from("post_images").delete()
+          .in("id",removedGallery.map(item=>item.id));
+        if(error)throw error;
+        const paths=removedGallery.map(item=>item.storage_path);
+        const {error:storageError}=await db.storage.from("flight-log").remove(paths);
+        if(storageError)console.warn("Gallery record deleted, but image cleanup failed:",storageError.message);
+      }
+
+      const files=Array.from($("galleryImages").files||[]);
+      let order=gallery.length;
+      for(const file of files) {
+        const path=await uploadFile(file,`posts/${postId}`);
+        const {error}=await db.from("post_images").insert({
+          post_id:postId,storage_path:path,alt_text:title,sort_order:order++
+        });
+        if(error)throw error;
+      }
+
+      say("editorMessage",publishStatus==="published"?"Story saved and published.":"Draft saved.","good");
+      resetForm();await loadPosts();
+    } catch(error) {
+      say("editorMessage","Save failed: "+(error.message||"Unknown error")+". Check your Supabase tables, policies, and image bucket.","error");
+    } finally {
+      $("saveButton").disabled=false;
+      $("saveButton").textContent="Save story";
+    }
+  });
+
+  $("newPost").addEventListener("click",()=>{resetForm();$("editorPanel").scrollIntoView({behavior:"smooth"});});
+  $("resetButton").addEventListener("click",resetForm);
+
+  $("postList").addEventListener("click",async event=>{
+    const edit=event.target.closest("[data-edit]");
+    const toggle=event.target.closest("[data-toggle]");
+    const del=event.target.closest("[data-delete]");
+    if(edit){editPost(edit.dataset.edit);return;}
+
+    if(toggle) {
+      const id=toggle.dataset.toggle;
+      const nextStatus=toggle.dataset.status==="published"?"draft":"published";
+      if(!confirm(`${nextStatus==="published"?"Publish":"Unpublish"} this story?`))return;
+      const {error}=await db.from("posts").update({
+        status:nextStatus,
+        published_at:nextStatus==="published"?new Date().toISOString():null,
+        updated_at:new Date().toISOString()
+      }).eq("id",id);
+      if(error)say("postsMessage",error.message,"error");
+      else{say("postsMessage",`Story ${nextStatus==="published"?"published":"unpublished"}.`,"good");loadPosts();}
+      return;
+    }
+
+    if(del) {
+      if(!confirm("Permanently delete this story and its gallery photos?"))return;
+      const id=del.dataset.delete;
+      const post=JSON.parse($("postList").dataset.posts||"[]").find(item=>String(item.id)===String(id));
+      const paths=[post?.cover_image_path,...(post?.post_images||[]).map(item=>item.storage_path)].filter(Boolean);
+      const {error}=await db.from("posts").delete().eq("id",id);
+      if(error){say("postsMessage",error.message,"error");return;}
+      if(paths.length) {
+        const {error:cleanupError}=await db.storage.from("flight-log").remove(paths);
+        if(cleanupError)console.warn("Post deleted, but some image files remain:",cleanupError.message);
+      }
+      say("postsMessage","Story deleted.","good");loadPosts();
+    }
+  });
+
+  $("galleryPreview").addEventListener("click",event=>{
+    const button=event.target.closest("[data-remove-gallery]");
+    if(!button)return;
+    const index=Number(button.dataset.removeGallery);
+    removedGallery.push(gallery[index]);
+    gallery.splice(index,1);drawGallery();
+  });
+
+  if(db) {
+    db.auth.onAuthStateChange((event,session)=>{
+      if(event==="SIGNED_OUT") {
+        currentUser=null;
+        $("dashboard").classList.add("hidden");
+        $("loginPanel").classList.remove("hidden");
+      } else if(session&&!currentUser) {
+        showDashboard(session.user);
+      }
+    });
+  }
+  checkSession();
+})();
+</script>
+</body>
+</html>
